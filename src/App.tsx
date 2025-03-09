@@ -8,7 +8,8 @@ import News from './pages/News';
 import Donate from './pages/Donate';
 import ChurchSR from './pages/ChurchSR';
 import SantaRita from './pages/SantaRita';
-import './index.css'
+import './index.css';
+import EventDetail from './pages/eventDetail.tsx';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/events" element={<Events />} />
+            <Route path="/eventos/:id" element={<EventDetail/>} />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/news" element={<News />} />
             <Route path="/churchsr" element={<ChurchSR />} />
