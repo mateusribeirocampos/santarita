@@ -1,36 +1,9 @@
 import { Calendar, Users, Music } from 'lucide-react';
+import { upcomingEvents }  from '../constants/upcomingEvents.ts';
+import { Link } from 'react-router-dom';
 
 const Events = () => {
-  const upcomingEvents = [
-    {
-      id: 1,
-      title: "Celebração de Páscoa",
-      date: "31  Março, 2025",
-      time: "10:00 AM",
-      description: "Junte-se a nós para nossa celebração especial da missa de Domingo de Páscoa.",
-      image: "/assets/pascoa.jpg",
-      type: "Missa"
-    },
-    {
-      id: 2,
-      title: "Comunidade",
-      date: "6 de abril, 2025",
-      time: "9:00 AM",
-      description: "Junte-se a nós para ajudar a servir nossa comunidade local através de vários programas de assistência.",
-      image: "/assets/comunidade.jpg",
-      type: "Serviço"
-    },
-    {
-      id: 3,
-      title: "Grupo de jovens",
-      date: "13 de abril, 2025",
-      time: "4:00 PM",
-      description: "Reunião semanal para os jovens discutirem a fé e construírem comunidade.",
-      image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80",
-      type: "Juventude"
-    }
-  ];
-
+  
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
       {/* Header */}
@@ -60,8 +33,10 @@ const Events = () => {
 
       {/* Event List */}
       <div className="space-y-8">
-        {upcomingEvents.map((event) => (
+        {upcomingEvents.length > 0 ? (
+          upcomingEvents.map((event) => (
           <div key={event.id} className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
+            {event.title}
             <div className="md:flex">
               <div className="md:flex-shrink-0">
                 <img
@@ -82,14 +57,21 @@ const Events = () => {
                   <p className="mt-2">{event.description}</p>
                 </div>
                 <div className="mt-4">
+                  <Link to={`/eventos/${event.id}`}>                
                   <button className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition-colors">
                     Leia mais
                   </button>
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+          <div>
+            <p>Nenhum evento disponível no momento.</p>
+          </div>
+        )}
       </div>
 
       {/* Calendar Download */}
