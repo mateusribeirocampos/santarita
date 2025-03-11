@@ -121,11 +121,11 @@ const ChurchSR = () => {
         </div>
       </div>
 
-      {/* Past Pastors */}
+      {/* Past Priests */}
       <div className="bg-gray-50 rounded-lg p-8">
         <div className="flex items-center mb-8">
           <BookOpen className="h-6 w-6 text-blue-700 mr-2" />
-          <h2 className="text-3xl font-bold">Our Pastors Through the Years</h2>
+          <h2 className="text-3xl font-bold">Nossos Padres ao longo dos anos</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {priests.map((priest, index) => (
