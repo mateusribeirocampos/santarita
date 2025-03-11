@@ -9,7 +9,7 @@ import Donate from './pages/Donate';
 import ChurchSR from './pages/ChurchSR';
 import SantaRita from './pages/SantaRita';
 import './index.css';
-import EventDetail from './pages/eventDetail.tsx';
+import EventDetail from './pages/EventDetail.tsx';
 
 function App() {
   return (

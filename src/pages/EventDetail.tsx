@@ -20,12 +20,12 @@ const EventDetail = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-      <Link to="/eventos" className="text-blue-700 hover:underline inline-flex items-center mb-6">
+      <Link to="/events" className="text-blue-700 hover:underline inline-flex items-center mb-6">
         <ArrowLeft className="h-4 w-4 mr-2" />
         Voltar para eventos
       </Link>
       
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
         <div className="h-64 sm:h-96 w-full">
           <img 
             src={event.image} 
