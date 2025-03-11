@@ -6,7 +6,7 @@ const Home = () => {
     <div className="space-y-12">
       {/* Hero Section */}
       <div
-        className="relative h-[500px] bg-cover bg-center"
+        className="relative h-[500px] bg-cover bg-center resize"
         style={{
           backgroundImage: 'url("assets/igreja.png")',
         }}
@@ -30,11 +30,11 @@ const Home = () => {
               <Calendar className="h-12 w-12 mx-auto text-blue-700 mb-4" />
               <h2 className="text-xl font-semibold mb-2">Eventos</h2>
               <p className="text-gray-600">
-                Junte-se a nós para celebrações especiais e reuniões
-                comunitárias
+              Junte-se a nós para celebrações especiais e reuniões
+              comunitárias
               </p>
             </div>
-          </Link>
+            </Link>
 
 
           <Link to="/schedule" className="flex items-top scroll-m-0">

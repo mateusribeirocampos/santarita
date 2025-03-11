@@ -13,7 +13,7 @@ const Navbar = () => {
     { name: 'Notícias', path: '/news' },
     { name: 'Igreja', path: '/churchsr' },
     { name: 'Santa Rita', path: '/santa-rita' },
-    { name: 'Doação', path: '/donate' },
+    { name: 'Dízimo', path: '/tithe' },
   ];
 
   return (

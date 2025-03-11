@@ -34,9 +34,9 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Siga-nos</h3>
             <div className="flex space-x-4">
-              <a href="https://www.facebook.com/vivaourofino/videos/%EF%B8%8F-igreja-de-santa-rita-de-c%C3%A1ssia-ouro-fino-mg-santa-rita-advogada-dos-imposs%C3%ADvei/186636910000005/" target='_blanck'  className="hover:text-blue-500">Facebook</a>
-              <a href="#" className="hover:text-blue-500">Instagram</a>
-              <a href="#" className="hover:text-blue-500">YouTube</a>
+              <a href="https://www.facebook.com/vivaourofino/videos/%EF%B8%8F-igreja-de-santa-rita-de-c%C3%A1ssia-ouro-fino-mg-santa-rita-advogada-dos-imposs%C3%ADvei/186636910000005/" target='_blank' className="hover:text-blue-500">Facebook</a>
+              <a href="https://www.instagram.com/explore/locations/71564550/paroquia-de-santo-antonio/" target='_blank' className="hover:text-blue-500">Instagram</a>
+              <a href="https://www.youtube.com/channel/UC1X_WleWvbN2O8EryCqXaug" target='_blank' className="hover:text-blue-500">YouTube</a>
             </div>
           </div>
         </div>

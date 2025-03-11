@@ -17,46 +17,46 @@ const ChurchSR = () => {
       image: "assets/IgrejaConstrucao.jpg",
     },
     {
-      year: "1980",
+      year: "2018",
       title: "Centro Comunitário",
       description:
         "O centro comunitário da paróquia foi construído para acomodar as crescentes atividades e programas comunitários.",
       image:
-        "https://images.unsplash.com/photo-1504173010664-32509aeebb62?auto=format&fit=crop&q=80",
+        "assets/Frente.png",
     },
     {
-      year: "2000",
+      year: "2023",
       title: "Jubileu de Ouro",
       description: "Celebração de 50 anos de fé, comunidade e serviço.",
       image:
-        "https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&q=80",
+        "assets/igreja.png",
     },
   ];
 
-  const pastors = [
+  const priests = [
     {
-      name: "Fr. John Smith",
+      name: "Pe. José Silva",
       years: "1950-1965",
       description:
-        "Founding pastor who established the parish and oversaw the church construction.",
+        "Fundador da paróquia que estabeleceu a comunidade e supervisionou a construção da igreja.",
     },
     {
-      name: "Fr. Michael Johnson",
+      name: "Pe. Moisés Oliveira",
       years: "1965-1990",
       description:
-        "Led the parish through significant growth and established many community programs.",
+        "Levou a paróquia através de um crescimento significativo e estabeleceu muitos programas comunitários.",
     },
     {
-      name: "Fr. Robert Davis",
+      name: "Pe. Roberto Da Silva",
       years: "1990-2010",
       description:
-        "Modernized the parish facilities and expanded outreach programs.",
+        "Modernizou as instalações da paróquia e expandiu os programas de alcance.",
     },
     {
-      name: "Fr. James Wilson",
+      name: "Pe. Antônio Santos",
       years: "2010-Present",
       description:
-        "Current pastor focusing on youth ministry and digital evangelization.",
+        "Padre atual focado em ministério juvenil e evangelização digital.",
     },
   ];
 
@@ -128,11 +128,11 @@ const ChurchSR = () => {
           <h2 className="text-3xl font-bold">Our Pastors Through the Years</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {pastors.map((pastor, index) => (
+          {priests.map((priest, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-2">{pastor.name}</h3>
-              <p className="text-blue-700 font-medium mb-3">{pastor.years}</p>
-              <p className="text-gray-600">{pastor.description}</p>
+              <h3 className="text-xl font-semibold mb-2">{priest.name}</h3>
+              <p className="text-blue-700 font-medium mb-3">{priest.years}</p>
+              <p className="text-gray-600">{priest.description}</p>
             </div>
           ))}
         </div>

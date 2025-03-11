@@ -22,7 +22,7 @@ const Donate = () => {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Apoie nossa Igreja</h1>
         <p className="text-gray-600">
-        Suas generosas doações nos ajudam a manter nossa igreja e apoiar nossos programas comunitários.
+        Seus generosos dízimos nos ajudam a manter nossa igreja e apoiar nossos programas comunitários.
         </p>
       </div>
 
@@ -57,17 +57,17 @@ const Donate = () => {
         </div>
 
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Selecione o tipo de doação</h2>
+          <h2 className="text-2xl font-semibold mb-4">Selecione o tipo de dízimo</h2>
           <div className="grid grid-cols-2 gap-4">
             <button
               className="p-4 rounded-md border border-blue-700 bg-blue-50 text-blue-700"
-              onClick={() => alert('Seleção de doação única!')}
+              onClick={() => alert('Seleção de dízimo único!')}
             >
               Uma vez
             </button>
             <button 
               className="p-4 rounded-md border border-gray-300 hover:border-blue-700 hover:bg-blue-50"
-              onClick={() => alert('Função de doação mensal em breve!')}
+              onClick={() => alert('Função de dízimo mensal em breve!')}
             >
               Mensal
             </button>
@@ -83,7 +83,7 @@ const Donate = () => {
               : 'bg-blue-700 hover:bg-blue-800'
           }`}
         >
-          {isProcessing ? 'Processing...' : `Doação R$ ${amount || '0'}`}
+          {isProcessing ? 'Processing...' : `Dízimo R$ ${amount || '0'}`}
         </button>
 
         <div className="mt-6 text-center text-sm text-gray-500">
@@ -92,7 +92,7 @@ const Donate = () => {
       </div>
 
       <div className="mt-12 bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-semibold mb-4">Outras maneiras de doar</h2>
+        <h2 className="text-2xl font-semibold mb-4">Outras maneiras de fazer o dízimo</h2>
         <div className="space-y-4">
           <div className="p-4 border border-gray-200 rounded-md">
             <h3 className="font-medium mb-2">Por Pix</h3>
@@ -101,7 +101,7 @@ const Donate = () => {
           <div className="p-4 border border-gray-200 rounded-md">
             <h3 className="font-medium mb-2">Em pessoa</h3>
             <p className="text-gray-600">
-            Coloque sua doação na cesta de coleta durante a missa ou na secretaria paroquial durante o horário comercial.
+            Coloque seu dízimo na cesta de coleta durante a missa ou na secretaria paroquial durante o horário comercial.
             </p>
           </div>
         </div>
