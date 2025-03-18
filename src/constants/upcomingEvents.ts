@@ -4,7 +4,7 @@ export interface Event {
   date: string;
   time: string;
   description: string;
-  fullDescription?: string; // HTML permitido para descrições ricas
+  fullDescription?: string;
   image: string;
   type: string;
   location?: string;
