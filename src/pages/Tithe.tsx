@@ -1,20 +1,55 @@
 import { useState } from 'react';
-// import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+//import {PaymentElement} from '@stripe/react-stripe-js';
+
+// Substitua pela sua chave pública do Stripe
+const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Donate = () => {
   const [amount, setAmount] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [donationType, setDonationType] = useState('once'); // 'once' ou 'monthly'
 
   const predefinedAmounts = [10, 25, 50, 100];
 
   const handleDonation = async () => {
+    if (!amount || parseFloat(amount) <= 0) {
+      alert('Por favor, insira um valor válido');
+      return;
+    }
+
     setIsProcessing(true);
-    // Note: In a real implementation, you would:
-    // 1. Call your backend to create a Stripe session
-    // 2. Redirect to Stripe checkout
-    // 3. Handle the success/failure redirect
-    alert('In a real implementation, this would redirect to Stripe checkout');
-    setIsProcessing(false);
+    
+    try {
+      const stripe = await stripePromise;
+      
+      if (!stripe) {
+        throw new Error('Falha ao carregar Stripe');
+      }
+
+      // Em uma implementação real, você chamaria seu backend para criar uma sessão
+      // Aqui estamos simulando o redirecionamento para o Stripe Checkout
+      
+      // Normalmente, você faria algo como:
+      // const response = await fetch('/api/create-checkout-session', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ 
+      //     amount: parseFloat(amount), 
+      //     donationType: donationType 
+      //   }),
+      // });
+      // const session = await response.json();
+      // await stripe.redirectToCheckout({ sessionId: session.id });
+      
+      // Como não temos um backend, vamos apenas simular o processo
+      alert(`Em uma implementação real, você seria redirecionado para o Stripe Checkout para pagar R$ ${amount} como dízimo ${donationType === 'monthly' ? 'mensal' : 'único'}`);
+    } catch (error) {
+      console.error('Erro ao processar pagamento:', error);
+      alert('Ocorreu um erro ao processar seu pagamento. Por favor, tente novamente.');
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -60,14 +95,22 @@ const Donate = () => {
           <h2 className="text-2xl font-semibold mb-4">Selecione o tipo de dízimo</h2>
           <div className="grid grid-cols-2 gap-4">
             <button
-              className="p-4 rounded-md border border-blue-700 bg-blue-50 text-blue-700"
-              onClick={() => alert('Seleção de dízimo único!')}
+              className={`p-4 rounded-md border ${
+                donationType === 'once' 
+                  ? 'border-blue-700 bg-blue-50 text-blue-700' 
+                  : 'border-gray-300 hover:border-blue-700 hover:bg-blue-50'
+              }`}
+              onClick={() => setDonationType('once')}
             >
               Uma vez
             </button>
             <button 
-              className="p-4 rounded-md border border-gray-300 hover:border-blue-700 hover:bg-blue-50"
-              onClick={() => alert('Função de dízimo mensal em breve!')}
+              className={`p-4 rounded-md border ${
+                donationType === 'monthly' 
+                  ? 'border-blue-700 bg-blue-50 text-blue-700' 
+                  : 'border-gray-300 hover:border-blue-700 hover:bg-blue-50'
+              }`}
+              onClick={() => setDonationType('monthly')}
             >
               Mensal
             </button>
@@ -87,7 +130,7 @@ const Donate = () => {
         </button>
 
         <div className="mt-6 text-center text-sm text-gray-500">
-          Secure payments powered by Stripe
+          Pagamentos seguros processados por Stripe
         </div>
       </div>
 

@@ -23,5 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
+.env
+
 # Stripe Implementation
 STRIPE_IMPLEMENTATION.md
+

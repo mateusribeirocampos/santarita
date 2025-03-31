@@ -9,6 +9,7 @@ import News from "./pages/News";
 import Tithe from "./pages/Tithe.tsx";
 import ChurchSR from "./pages/ChurchSR";
 import SantaRita from "./pages/SantaRita";
+import Success from "./pages/Success.tsx";
 import "./index.css";
 import EventDetail from "./pages/EventDetail.tsx";
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/churchsr" element={<ChurchSR />} />
             <Route path="/santa-rita" element={<SantaRita />} />
             <Route path="/tithe" element={<Tithe />} />
+            <Route path="/success" element={<Success />} />
           </Routes>
         </main>
         <Footer />
