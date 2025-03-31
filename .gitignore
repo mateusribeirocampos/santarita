@@ -23,8 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# Dotenv
 .env
 
-# implementation stripe
+# Stripe Implementation
 STRIPE_IMPLEMENTATION.md
+
