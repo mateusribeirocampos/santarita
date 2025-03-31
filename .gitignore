@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Stripe Implementation
+STRIPE_IMPLEMENTATION.md
