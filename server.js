@@ -1,5 +1,6 @@
 // Exemplo de servidor backend para processar pagamentos do Stripe
 const express = require('express');
+const he = require('he');
 const stripe = require('stripe')(STRIPE_SECRET_KEY);
 const cors = require('cors');
 
@@ -66,7 +67,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
     event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
   } catch (err) {
     console.error(`Erro de webhook: ${err.message}`);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    return res.status(400).send(`Webhook Error: ${he.escape(err.message)}`);
   }
   
   // Lidar com o evento
