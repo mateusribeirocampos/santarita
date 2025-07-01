@@ -48,7 +48,7 @@ const Home = () => {
             </div>
           </Link>
 
-          <Link to="/donate" className="block w-full">
+          <Link to="/tithe" className="block w-full">
             <div className="bg-gray-100 p-6 rounded-lg shadow-md text-center h-full">
               <Heart className="h-12 w-12 mx-auto text-blue-700 mb-4" />
               <h3 className="text-xl font-semibold mb-2">Faça a sua doação</h3>
