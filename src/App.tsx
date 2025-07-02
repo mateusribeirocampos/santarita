@@ -12,29 +12,54 @@ import SantaRita from "./pages/SantaRita";
 import Success from "./pages/Success.tsx";
 import "./index.css";
 import EventDetail from "./pages/EventDetail.tsx";
+import NewsDetail from "./pages/NewsDetail.tsx";
+import Admin from "./pages/Admin";
+import Login from "./pages/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   return (
-    <Router future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
-      <ScrollToTop />
-      <div className="min-h-screen flex flex-col bg-stone-50">
-        <Navbar />
-        <main className="flex-grow">
+    <AuthProvider>
+      <Router future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
+        <ScrollToTop />
+        <div className="min-h-screen flex flex-col bg-stone-50">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/eventos/:id" element={<EventDetail />} />
-            <Route path="/schedule" element={<Schedule />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/churchsr" element={<ChurchSR />} />
-            <Route path="/santa-rita" element={<SantaRita />} />
-            <Route path="/tithe" element={<Tithe />} />
-            <Route path="/success" element={<Success />} />
+            {/* Login route (no navbar/footer) */}
+            <Route path="/login" element={<Login />} />
+            
+            {/* Admin route (protected, no navbar/footer) */}
+            <Route path="/admin" element={
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
+            } />
+            
+            {/* Public routes with navbar/footer */}
+            <Route path="/*" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/events" element={<Events />} />
+                    <Route path="/eventos/:id" element={<EventDetail />} />
+                    <Route path="/schedule" element={<Schedule />} />
+                    <Route path="/news" element={<News />} />
+                    <Route path="/news/:id" element={<NewsDetail />} />
+                    <Route path="/churchsr" element={<ChurchSR />} />
+                    <Route path="/santa-rita" element={<SantaRita />} />
+                    <Route path="/tithe" element={<Tithe />} />
+                    <Route path="/success" element={<Success />} />
+                  </Routes>
+                </main>
+                <Footer />
+              </>
+            } />
           </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

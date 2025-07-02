@@ -1,8 +1,11 @@
-import { Calendar, Users, Music } from 'lucide-react';
-import { upcomingEvents }  from '../constants/upcomingEvents.ts';
+import { Calendar, Users, Music, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useEvents } from '../hooks/useEvents';
 
 const Events = () => {
+  const { events, loading, error, refetch } = useEvents({ active: true });
+  
+  // Debug: console.log('📅 [Events] Estado atual:', { events: events?.length, loading, error });
   
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
@@ -31,48 +34,83 @@ const Events = () => {
         </div>
       </div>
 
+      {/* Loading State */}
+      {loading && (
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-700 mr-3" />
+          <span className="text-lg text-gray-600">Carregando eventos...</span>
+        </div>
+      )}
+
+      {/* Error State */}
+      {error && !loading && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+          <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-red-800 mb-2">Erro ao carregar eventos</h3>
+          <p className="text-red-600 mb-4">{error}</p>
+          <button
+            onClick={refetch}
+            className="inline-flex items-center bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+          >
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Tentar novamente
+          </button>
+        </div>
+      )}
+
       {/* Event List */}
-      <div className="space-y-8">
-        {upcomingEvents.length > 0 ? (
-          upcomingEvents.map((event) => (
-          <div key={event.id} className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
-            {event.title}
-            <div className="md:flex">
-              <div className="md:flex-shrink-0">
-                <img
-                  className="h-48 w-full object-cover md:w-48"
-                  src={event.image}
-                  alt={event.title}
-                />
+      {/* Debug render conditions */}
+      {!loading && !error && (
+        <div className="space-y-8">
+          {events.length > 0 ? (
+            events.map((event) => (
+              <div key={event.id} className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
+                <div className="md:flex">
+                  <div className="md:flex-shrink-0">
+                    <img
+                      className="h-48 w-full object-cover md:w-48"
+                      src={event.image || '/assets/igreja.png'}
+                      alt={event.title}
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = '/assets/igreja.png';
+                      }}
+                    />
+                  </div>
+                  <div className="p-8">
+                    <div className="uppercase tracking-wide text-sm text-blue-700 font-semibold">
+                      {event.type}
+                    </div>
+                    <h2 className="block mt-1 text-2xl font-semibold text-gray-900">
+                      {event.title}
+                    </h2>
+                    <div className="mt-2 text-gray-600">
+                      <p className="font-medium">{event.date} às {event.time}</p>
+                      {event.location && (
+                        <p className="text-sm text-gray-500">📍 {event.location}</p>
+                      )}
+                      <p className="mt-2">{event.description}</p>
+                    </div>
+                    <div className="mt-4">
+                      <Link to={`/eventos/${event.id}`}>                
+                        <button className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition-colors">
+                          Leia mais
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="p-8">
-                <div className="uppercase tracking-wide text-sm text-blue-700 font-semibold">
-                  {event.type}
-                </div>
-                <h2 className="block mt-1 text-2xl font-semibold text-gray-900">
-                  {event.title}
-                </h2>
-                <div className="mt-2 text-gray-600">
-                  <p className="font-medium">{event.date} at {event.time}</p>
-                  <p className="mt-2">{event.description}</p>
-                </div>
-                <div className="mt-4">
-                  <Link to={`/eventos/${event.id}`}>                
-                  <button className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition-colors">
-                    Leia mais
-                  </button>
-                  </Link>
-                </div>
-              </div>
+            ))
+          ) : (
+            <div className="text-center py-12">
+              <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-600 mb-2">Nenhum evento encontrado</h3>
+              <p className="text-gray-500">Não há eventos agendados no momento. Volte em breve!</p>
             </div>
-          </div>
-        ))
-      ) : (
-          <div>
-            <p>Nenhum evento disponível no momento.</p>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
 
       {/* Calendar Download */}
       <div className="mt-12 text-center">

@@ -1,10 +1,70 @@
 import { useParams, Link } from 'react-router-dom';
 import { upcomingEvents } from '../constants/upcomingEvents.ts';
-import { Calendar, MapPin, Clock, ArrowLeft } from 'lucide-react';
+import { Calendar, MapPin, Clock, ArrowLeft, Loader2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { apiService } from '../services/api';
+import { Event } from '../types';
 
 const EventDetail = () => {
   const { id } = useParams();
-  const event = upcomingEvents.find(event => event.id.toString() === id);
+  const [event, setEvent] = useState<Event | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      if (!id) return;
+
+      try {
+        setLoading(true);
+        const apiEvent = await apiService.getEventById(id);
+        
+        const transformedEvent: Event = {
+          id: apiEvent.id,
+          title: apiEvent.title,
+          description: apiEvent.description,
+          fullDescription: apiEvent.fullDescription,
+          date: new Date(apiEvent.date).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+          }),
+          time: apiEvent.time,
+          location: apiEvent.location,
+          image: apiEvent.image,
+          type: apiEvent.type,
+          category: apiEvent.category
+        };
+        
+        setEvent(transformedEvent);
+      } catch (err) {
+        console.error('Erro ao carregar evento:', err);
+        
+        // Fallback para dados mock
+        const mockEvent = upcomingEvents.find(event => event.id.toString() === id);
+        if (mockEvent) {
+          setEvent({
+            ...mockEvent,
+            id: mockEvent.id.toString()
+          });
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvent();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-700 mr-3" />
+          <span className="text-lg text-gray-600">Carregando evento...</span>
+        </div>
+      </div>
+    );
+  }
 
   if (!event) {
     return (
@@ -20,7 +80,7 @@ const EventDetail = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-      <Link to="/events" className="text-blue-700 hover:underline inline-flex items-center mb-6">
+      <Link to="/eventos" className="text-blue-700 hover:underline inline-flex items-center mb-6">
         <ArrowLeft className="h-4 w-4 mr-2" />
         Voltar para eventos
       </Link>
