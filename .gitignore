@@ -28,3 +28,5 @@ dist-ssr
 # Stripe Implementation
 STRIPE_IMPLEMENTATION.md
 
+
+/src/generated/prisma

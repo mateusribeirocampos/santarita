@@ -1,12 +1,17 @@
-// Exemplo de servidor backend para processar pagamentos do Stripe
+// Servidor backend para processar pagamentos do Stripe
 const express = require('express');
 const he = require('he');
-const stripe = require('stripe')(STRIPE_SECRET_KEY);
+require('dotenv').config();
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:5173' })); // Ajuste para a URL do seu frontend
+app.use(cors({ 
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true 
+}));
 
 app.post('/api/create-checkout-session', async (req, res) => {
   const { amount, donationType } = req.body;
@@ -59,7 +64,7 @@ app.get('/api/checkout-session', async (req, res) => {
 // Webhook para receber eventos do Stripe (importante para processar pagamentos assíncronos)
 app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
-  const endpointSecret = STRIPE_WEBHOOK_SECRET;
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
   
   let event;
   
@@ -89,8 +94,14 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
   res.json({ received: true });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor Stripe rodando na porta ${PORT}`);
+  console.log(`📝 Endpoints disponíveis:`);
+  console.log(`   POST http://localhost:${PORT}/api/create-checkout-session`);
+  console.log(`   GET  http://localhost:${PORT}/api/checkout-session`);
+  console.log(`   POST http://localhost:${PORT}/webhook`);
+});
 
 // Para iniciar este servidor:
 // 1. Instale as dependências: npm install express stripe cors

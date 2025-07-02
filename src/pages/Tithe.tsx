@@ -27,23 +27,30 @@ const Donate = () => {
         throw new Error('Falha ao carregar Stripe');
       }
 
-      // Em uma implementação real, você chamaria seu backend para criar uma sessão
-      // Aqui estamos simulando o redirecionamento para o Stripe Checkout
+      // Chamar backend para criar sessão de checkout
+      const response = await fetch('http://localhost:3001/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          amount: parseFloat(amount), 
+          donationType: donationType 
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erro HTTP: ${response.status}`);
+      }
+
+      const session = await response.json();
       
-      // Normalmente, você faria algo como:
-      // const response = await fetch('/api/create-checkout-session', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ 
-      //     amount: parseFloat(amount), 
-      //     donationType: donationType 
-      //   }),
-      // });
-      // const session = await response.json();
-      // await stripe.redirectToCheckout({ sessionId: session.id });
-      
-      // Como não temos um backend, vamos apenas simular o processo
-      alert(`Em uma implementação real, você seria redirecionado para o Stripe Checkout para pagar R$ ${amount} como dízimo ${donationType === 'monthly' ? 'mensal' : 'único'}`);
+      // Redirecionar para Stripe Checkout
+      const { error } = await stripe.redirectToCheckout({ 
+        sessionId: session.id 
+      });
+
+      if (error) {
+        throw error;
+      }
     } catch (error) {
       console.error('Erro ao processar pagamento:', error);
       alert('Ocorreu um erro ao processar seu pagamento. Por favor, tente novamente.');
