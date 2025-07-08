@@ -9,6 +9,11 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "vercel": {
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist",
+    "installCommand": "npm install"
+  },
   "dependencies": {
     "@stripe/react-stripe-js": "^3.5.1",
     "@stripe/stripe-js": "^2.4.0",
