@@ -18,6 +18,19 @@ const EventDetail = () => {
         setLoading(true);
         const apiEvent = await apiService.getEventById(id);
         
+        // Sanitizar URL da imagem
+        const sanitizeImageUrl = (url: string | undefined): string => {
+          if (!url) return '/assets/igreja.png'; // fallback
+          
+          // Permitir apenas URLs relativas seguras ou do próprio domínio
+          if (url.startsWith('/uploads/') || url.startsWith('/assets/')) {
+            return url;
+          }
+          
+          // Se for URL externa, usar fallback
+          return '/assets/igreja.png';
+        };
+
         const transformedEvent: Event = {
           id: apiEvent.id,
           title: apiEvent.title,
@@ -30,7 +43,7 @@ const EventDetail = () => {
           }),
           time: apiEvent.time,
           location: apiEvent.location,
-          image: apiEvent.image,
+          image: sanitizeImageUrl(apiEvent.image),
           type: apiEvent.type,
           category: apiEvent.category
         };

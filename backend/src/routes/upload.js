@@ -56,7 +56,7 @@ router.post('/image', crudRateLimiter, authMiddleware, upload.single('image'), (
     const sanitizedFilename = path.basename(req.file.filename);
     const imageUrl = `/uploads/${sanitizedFilename}`;
     
-    console.log('✅ [UPLOAD] Imagem enviada com sucesso:', sanitizedFilename);
+    console.log('✅ [UPLOAD] Imagem enviada com sucesso');
     
     res.json({
       message: 'Imagem enviada com sucesso',
@@ -86,11 +86,16 @@ router.delete('/image/:filename', crudRateLimiter, authMiddleware, (req, res) =>
       return res.status(400).json({ error: 'Formato de arquivo inválido' });
     }
     
-    const filepath = path.join(uploadDir, filename);
+    const filepath = path.resolve(uploadDir, filename);
+    
+    // Verificar se o path resolvido ainda está dentro do diretório de upload
+    if (!filepath.startsWith(path.resolve(uploadDir))) {
+      return res.status(400).json({ error: 'Acesso negado' });
+    }
     
     if (fs.existsSync(filepath)) {
       fs.unlinkSync(filepath);
-      console.log('✅ [UPLOAD] Imagem deletada:', filename);
+      console.log('✅ [UPLOAD] Imagem deletada');
       res.json({ message: 'Imagem deletada com sucesso' });
     } else {
       res.status(404).json({ error: 'Imagem não encontrada' });
