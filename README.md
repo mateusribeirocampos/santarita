@@ -1,4 +1,4 @@
-# Website for Igreja Santa Rita de Cássia
+# Website for Igreja Santa Rita de Cássia - Ouro Fino, MG
 
 [![GitHub License](https://img.shields.io/github/license/mateusribeirocampos/santarita)](https://github.com/mateusribeirocampos/santarita/blob/main/LICENSE)
 [![GitHub Issues](https://img.shields.io/github/issues/mateusribeirocampos/santarita)](https://github.com/mateusribeirocampos/santarita/issues)
@@ -6,8 +6,10 @@
 
 ## Overview
 
-**Website for Santa Rita de Cássia Catholic Church**  
-A digital hub to engage our faith community and streamline church operations.
+**Complete website and admin system for Santa Rita de Cássia Catholic Church**  
+A modern full-stack web application to engage our faith community, manage church content, and facilitate digital donations.
+
+🎉 **Status**: Fully functional with admin panel, authentication, and real-time data integration
 
 ![Church Banner Image](public/assets/churchIcon4.png?text=Santa+Rita+de+Cássia+Church)
 
@@ -18,7 +20,11 @@ A digital hub to engage our faith community and streamline church operations.
 - [Project Overview](#project-overview)
 - [Key Features](#key-features)
 - [Technology Stack](#technology-stack)
+- [Live Demo](#live-demo)
 - [Installation & Setup](#installation--setup)
+- [Admin Panel](#admin-panel)
+- [API Documentation](#api-documentation)
+- [Testing](#testing)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
@@ -27,20 +33,39 @@ A digital hub to engage our faith community and streamline church operations.
 
 ## Project Overview
 
-This website serves as the official online presence for Igreja Santa Rita de Cássia, offering parishioners and visitors:
+This modern web application serves as the complete digital platform for Igreja Santa Rita de Cássia, providing:
 
-- **Worship Information:** Mass times, sacraments details, and live stream access.
-- **Event Management:** Interactive calendar, online event registration, and automated reminders.
-- **Community Portal:** Member registration, prayer requests, volunteer opportunities, and group directories.
-- **Resource Library:** Homily archives, Catholic teachings, digital rosary guides, and daily saint features.
-- **Administration Tools:** Content management system, donation tracking, analytics dashboard, and newsletter integration.
+### **Public Website Features**
 
-**Key Objectives:**
+- **Event Calendar:** Real-time event listings with detailed information
+- **News & Announcements:** Church news with categorization and search
+- **Mass Schedule:** Fixed schedule with special celebration information
+- **Digital Tithing:** Secure Stripe integration for online donations
+- **Church History:** Comprehensive information about the church and Santa Rita
+- **Responsive Design:** Mobile-first approach with Tailwind CSS
 
-- Enhance communication with parishioners  
-- Facilitate easy access to spiritual resources  
-- Strengthen community connections  
-- Streamline event management and church operations  
+### **Admin Management System**
+
+- **Complete CRUD Operations:** Create, read, update, delete events and news
+- **JWT Authentication:** Secure token-based authentication system
+- **Role-based Access Control:** Admin/Editor permissions with middleware protection
+- **Password Security:** bcrypt encryption for user passwords
+- **Rate Limiting:** Protection against brute force attacks and spam
+- **Content Management:** Rich text editor with HTML support
+- **Real-time Updates:** Instant synchronization between admin and public pages
+- **Image Management:** File upload system with drag & drop interface
+- **Publication Control:** Draft/published status with scheduling
+
+### **Technical Achievements**
+
+- **Full-Stack Integration:** React frontend with Node.js/Express backend
+- **Layered Architecture:** Controllers, Services, Repositories pattern
+- **Database Management:** PostgreSQL with Prisma ORM
+- **RESTful API:** 15+ endpoints with comprehensive error handling
+- **Security Implementation:** JWT authentication, bcrypt password hashing, and rate limiting
+- **Type Safety:** Complete TypeScript implementation
+- **Testing Coverage:** 39 automated tests with 60%+ coverage
+- **Debug System:** Comprehensive logging for development and troubleshooting  
 
 ---
 
@@ -83,29 +108,111 @@ This website serves as the official online presence for Igreja Santa Rita de Cá
 
 ## Technology Stack
 
-**Frontend:**
+### **Frontend**
 
-- [React.js](https://reactjs.org/) with framework
-- [Tailwind CSS](https://tailwindcss.com/) for styling
-- [Axios](https://axios-http.com/) for API communication
-- [Formik](https://formik.org/) for form management
+- **[React 18.3.1](https://reactjs.org/)** - Modern UI library with hooks
+- **[TypeScript 5.2+](https://typescriptlang.org/)** - Type safety and developer experience
+- **[Vite 5.0+](https://vitejs.dev/)** - Fast build tool and dev server
+- **[Tailwind CSS 3.4.1](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[React Router DOM 6.30.0](https://reactrouter.com/)** - Client-side routing
+- **[Lucide React](https://lucide.dev/)** - Beautiful icon library
 
-**Backend & Database:**
+### **Backend**
 
-- (Details about backend technologies, if applicable)
-- PostgreSQL 15+ for database management
+- **[Node.js](https://nodejs.org/)** - JavaScript runtime
+- **[Express.js](https://expressjs.com/)** - Web application framework
+- **[Prisma 6.11.0](https://prisma.io/)** - Modern database ORM
+- **[PostgreSQL 15+](https://postgresql.org/)** - Robust relational database
+- **[JWT](https://jwt.io/)** - JSON Web Token authentication
+- **[bcrypt](https://github.com/kelektiv/node.bcrypt.js)** - Password hashing
+- **[express-rate-limit](https://github.com/express-rate-limit/express-rate-limit)** - Rate limiting middleware
+
+### **Payment Processing**
+
+- **[Stripe](https://stripe.com/)** - Secure payment processing
+- **[@stripe/react-stripe-js](https://stripe.com/docs/stripe-js/react)** - React integration
+
+### **Development & Testing**
+
+- **[Vitest](https://vitest.dev/)** - Unit testing framework
+- **[React Testing Library](https://testing-library.com/react)** - Component testing
+- **[ESLint](https://eslint.org/)** - Code linting
+- **[Prettier](https://prettier.io/)** - Code formatting
+
+### **Deployment**
+
+- **[Vercel](https://vercel.com/)** - Frontend deployment
+- **Development Ports:** Frontend (3000), Backend (3001)
+
+---
+
+## Live Demo
+
+🌐 **Production Website:** [https://santaritaourofino.vercel.app](https://santaritaourofino.vercel.app)
+
+### Demo Credentials
+
+For testing the admin panel in development:
+
+```bash
+Administrator:
+Email: admin@santarita.com
+Password: admin123
+
+Editor:
+Email: padre@santarita.com  
+Password: padre123
+```
+
+> ⚠️ **Note:** These are demo credentials for development only
 
 ---
 
 ## Installation & Setup
+
+### Project Structure
+
+```bash
+santarita/
+├── backend/                    # Node.js + Express + Prisma
+│   ├── src/                   # Source code with layered architecture
+│   │   ├── controllers/       # Request/response handling
+│   │   ├── services/          # Business logic
+│   │   ├── repositories/      # Data access layer
+│   │   ├── middlewares/       # JWT auth, CORS, etc.
+│   │   ├── routes/            # API route definitions
+│   │   ├── app.js             # Express app configuration
+│   │   └── server.js          # Server initialization
+│   ├── uploads/               # User uploaded images (auto-created)
+│   ├── prisma/                # Database schema and migrations
+│   │   └── schema.prisma      # Prisma schema file
+│   ├── .env                   # Backend environment variables
+│   ├── package.json           # Backend dependencies
+│   └── package-lock.json      # Backend lock file
+├── frontend/                   # React + Vite + TypeScript
+│   ├── src/                   # Frontend source code
+│   │   ├── components/        # React components
+│   │   ├── pages/             # Page components
+│   │   ├── services/          # API services + auth service
+│   │   └── contexts/          # React contexts
+│   ├── .env                   # Frontend environment variables
+│   ├── package.json           # Frontend dependencies
+│   ├── package-lock.json      # Frontend lock file
+│   ├── index.html             # Frontend entry point
+│   ├── vite.config.ts         # Vite configuration
+│   └── tailwind.config.js     # Tailwind CSS configuration
+├── DEPLOY.md                  # Deployment guide
+└── README.md                  # This file
+```
 
 ### Prerequisites
 
 - **Node.js** v18+
 - **PostgreSQL** 15+
 - **npm** package manager
+- **Git** for version control
 
-### Setup Instructions
+### Quick Start
 
 1. **Clone the repository:**
 
@@ -117,21 +224,282 @@ This website serves as the official online presence for Igreja Santa Rita de Cá
 2. **Install dependencies:**
 
     ```bash
+    # Install backend dependencies
+    cd backend
+    npm install
+    
+    # Install frontend dependencies  
+    cd ../frontend
     npm install
     ```
 
 3. **Environment Configuration:**
-    - Create a `.env` file in the root directory.
-    - Add necessary environment variables (e.g., API keys, database connection strings).
 
-4. **Run the application locally:**
+    Create `.env` files in both frontend and backend directories:
+
+    **Backend (.env):**
 
     ```bash
+    # Backend Configuration
+    PORT=3001
+    FRONTEND_URL=http://localhost:3000
+    
+    # Database Configuration
+    DATABASE_URL="postgresql://username:password@localhost:5432/santa_rita_db"
+    
+    # Stripe Configuration (Backend)
+    STRIPE_SECRET_KEY=sk_test_your_secret_key
+    STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
+    ```
+
+    **Frontend (.env):**
+
+    ```bash
+    # Frontend API Configuration
+    VITE_API_URL=http://localhost:3001
+    
+    # Stripe Configuration (Frontend)
+    VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key
+    ```
+
+4. **Database Setup:**
+
+    ```bash
+    # Navigate to backend directory
+    cd backend
+    
+    # Generate Prisma client
+    npx prisma generate
+    
+    # Push database schema
+    npx prisma db push
+    
+    # Seed with initial data
+    curl -X POST http://localhost:3001/api/seed
+    ```
+
+5. **Start the application:**
+
+    ```bash
+    # Terminal 1: Start backend server
+    cd backend
+    npm start
+    
+    # Terminal 2: Start frontend development server
+    cd frontend
     npm run dev
     ```
 
-5. **Access the website:**
-    - Open your browser and navigate to `http://localhost:3000`
+    > **Note:** The backend now uses a layered architecture with JWT authentication. Make sure to run the seed command after starting the backend to create initial admin users.
+
+6. **Access the application:**
+    - **Public Website:** `http://localhost:3000`
+    - **Admin Panel:** `http://localhost:3000/admin`
+    - **API Documentation:** `http://localhost:3001/api`
+
+### Build for Production
+
+```bash
+# Build frontend
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+---
+
+## Admin Panel
+
+### Features
+
+- **Events Management:** Create, edit, delete church events
+- **News Management:** Manage church announcements and news
+- **User Roles:** Admin and Editor permissions
+- **Real-time Updates:** Changes reflect immediately on public pages
+- **Rich Text Editor:** HTML support for detailed content
+- **Image Upload:** Drag & drop file upload with automatic processing
+- **Publication Control:** Draft and published status
+
+### Navigation
+
+```bash
+/login     - Authentication page
+/admin     - Main admin dashboard
+           ├── Events tab (event management)
+           └── News tab (news management)
+```
+
+### Security Features
+
+- Protected routes with authentication
+- Role-based access control
+- Session persistence with localStorage
+- Automatic logout functionality
+- Input validation and sanitization
+- Rate limiting protection against brute force attacks
+
+---
+
+## API Documentation
+
+### Base URL
+
+```bash
+Development: http://localhost:3001/api
+Production: [Your production API URL]
+```
+
+### Endpoints
+
+#### Authentication (Public)
+
+```bash
+POST   /api/auth/login       - User login (returns JWT token)
+POST   /api/auth/register    - User registration
+POST   /api/auth/verify      - Verify JWT token (protected)
+POST   /api/auth/refresh     - Refresh JWT token
+POST   /api/auth/logout      - User logout (protected)
+```
+
+#### Events
+
+```bash
+GET    /api/events           - List active events (public)
+GET    /api/events/:id       - Get specific event (public)
+POST   /api/events           - Create new event (protected: editor+)
+PUT    /api/events/:id       - Update event (protected: editor+)
+DELETE /api/events/:id       - Delete event (protected: editor+)
+```
+
+#### News
+
+```bash
+GET    /api/news             - List published news (public)
+GET    /api/news/:id         - Get specific news article (public)
+POST   /api/news             - Create new news (protected: editor+)
+PUT    /api/news/:id         - Update news (protected: editor+)
+DELETE /api/news/:id         - Delete news (protected: editor+)
+```
+
+#### Other
+
+```bash
+GET    /api/categories       - List categories (public)
+POST   /api/categories       - Create category (protected: editor+)
+GET    /api/health          - Health check
+POST   /api/seed            - Populate database with initial data
+POST   /api/create-checkout-session - Stripe payment session
+POST   /api/upload/image           - Upload image file (protected: editor+)
+DELETE /api/upload/image/:filename - Delete uploaded image (protected: editor+)
+```
+
+### Response Format
+
+```json
+{
+  "id": "string",
+  "title": "string",
+  "description": "string",
+  "date": "ISO string",
+  "category": {
+    "id": "string",
+    "name": "string"
+  }
+}
+```
+
+---
+
+## Rate Limiting
+
+The API includes comprehensive rate limiting to protect against abuse and ensure service availability.
+
+### Rate Limit Configuration
+
+| Endpoint Type | Limit | Window | Description |
+|---------------|-------|--------|-------------|
+| **Authentication** | 5 requests | 15 minutes | Login attempts per IP |
+| **Registration** | 3 requests | 1 hour | User registration per IP |
+| **CRUD Operations** | 20 requests | 1 minute | Create/Update/Delete per IP |
+| **Public APIs** | 100 requests | 1 minute | GET requests per IP |
+| **Global Limit** | 200 requests | 1 minute | All requests per IP |
+
+### Rate Limit Headers
+
+When rate limiting is active, the following headers are included in responses:
+
+```bash
+RateLimit-Limit: 5           # Maximum requests allowed
+RateLimit-Remaining: 2       # Requests remaining in window
+RateLimit-Reset: 1625097600  # When the limit resets (Unix timestamp)
+```
+
+### Rate Limit Exceeded Response
+
+When limits are exceeded, the API returns a `429 Too Many Requests` status:
+
+```json
+{
+  "error": "Muitas tentativas",
+  "message": "Limite de 5 tentativas de login excedido. Tente novamente em 15 minutos.",
+  "retryAfter": 900000,
+  "type": "RATE_LIMIT_EXCEEDED"
+}
+```
+
+### Protected Endpoints
+
+#### High Security (Restrictive)
+- `POST /api/auth/login` - 5 requests per 15 minutes
+- `POST /api/auth/register` - 3 requests per hour
+
+#### Medium Security (CRUD Operations)
+- `POST /api/events` - 20 requests per minute
+- `PUT /api/events/:id` - 20 requests per minute
+- `DELETE /api/events/:id` - 20 requests per minute
+- `POST /api/news` - 20 requests per minute
+- `PUT /api/news/:id` - 20 requests per minute
+- `DELETE /api/news/:id` - 20 requests per minute
+
+#### Low Security (Public APIs)
+- `GET /api/events` - 100 requests per minute
+- `GET /api/news` - 100 requests per minute
+- `GET /api/categories` - 100 requests per minute
+
+---
+
+## Testing
+
+### Run Tests
+
+```bash
+# Run all tests
+npm run test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with UI
+npm run test:ui
+```
+
+### Test Coverage
+
+- **39+ automated tests** implemented
+- **60%+ overall coverage**
+- **96%+ coverage** for critical components (Tithe)
+- Unit tests for components, hooks, and utilities
+- Integration tests for API endpoints
+
+### Testing Stack
+
+- **Vitest** - Fast unit test framework
+- **React Testing Library** - Component testing utilities
+- **jsdom** - DOM environment for testing
 
 ---
 

@@ -1,0 +1,31 @@
+{
+  "name": "santa-rita-backend",
+  "version": "1.0.0",
+  "description": "Backend completo para a Igreja Santa Rita com Prisma e Stripe",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "db:studio": "npx prisma studio",
+    "db:push": "npx prisma db push",
+    "db:seed": "curl -X POST http://localhost:3001/api/seed"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.11.0",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.4.1",
+    "he": "^1.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
+    "stripe": "^14.18.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.7",
+    "nodemon": "^3.0.3",
+    "prisma": "^6.11.0"
+  }
+}
