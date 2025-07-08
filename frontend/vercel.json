@@ -9,6 +9,8 @@
       }
     }
   ],
+  "installCommand": "npm install",
+  "buildCommand": "npx vite build",
   "routes": [
     {
       "src": "/assets/(.*)",
