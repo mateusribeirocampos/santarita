@@ -102,7 +102,7 @@ class ApiService {
       console.log(`✅ [ApiService] Dados recebidos:`, data);
       return data;
     } catch (error) {
-      console.error(`❌ [ApiService] Request falhou para ${endpoint}:`, error);
+      console.error('❌ [ApiService] Request falhou:', { endpoint, error });
       throw error;
     }
   }

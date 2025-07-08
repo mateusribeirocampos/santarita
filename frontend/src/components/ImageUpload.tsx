@@ -18,6 +18,19 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   className = ""
 }) => {
   const [isUploading, setIsUploading] = useState(false);
+  
+  // Sanitizar URL da imagem para prevenir XSS
+  const getSafeImageUrl = (url: string | undefined): string => {
+    if (!url) return '';
+    
+    // Permitir apenas URLs relativas seguras
+    if (url.startsWith('/uploads/') || url.startsWith('/assets/')) {
+      return url;
+    }
+    
+    // Bloquear URLs externas e potencialmente maliciosas
+    return '';
+  };
   const [error, setError] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -163,7 +176,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       {currentImage ? (
         <div className="relative">
           <img
-            src={currentImage}
+            src={getSafeImageUrl(currentImage)}
             alt="Preview"
             className="w-full h-48 object-cover rounded-lg border border-gray-300"
           />
