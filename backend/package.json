@@ -6,9 +6,12 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
+    "build": "npx prisma generate",
+    "postinstall": "npx prisma generate",
     "db:studio": "npx prisma studio",
     "db:push": "npx prisma db push",
-    "db:seed": "curl -X POST http://localhost:3001/api/seed"
+    "db:seed": "curl -X POST http://localhost:3001/api/seed",
+    "db:seed:prod": "curl -X POST https://santa-rita-backend.onrender.com/api/seed"
   },
   "dependencies": {
     "@prisma/client": "^6.11.0",
