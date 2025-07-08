@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, MapPin, Clock, ArrowLeft, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import DOMPurify from 'dompurify';
 import { apiService } from '../services/api';
 import { Event } from '../types';
 
@@ -114,7 +115,7 @@ const EventDetail = () => {
           <div className="prose max-w-none text-gray-700">
             <p>{event.description}</p>
             {event.fullDescription && (
-              <div dangerouslySetInnerHTML={{ __html: event.fullDescription }} />
+              <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.fullDescription) }} />
             )}
           </div>
         </div>

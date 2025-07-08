@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, User, Tag, Loader2, AlertCircle } from 'lucide-react';
+import DOMPurify from 'dompurify';
 import { apiService, ApiNews } from '../services/api';
 
 const NewsDetail = () => {
@@ -151,7 +152,7 @@ const NewsDetail = () => {
             {news.content.includes('<') ? (
               // Render HTML content
               <div 
-                dangerouslySetInnerHTML={{ __html: news.content }}
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(news.content) }}
                 className="text-gray-700 leading-relaxed"
               />
             ) : (

@@ -52,15 +52,16 @@ router.post('/image', crudRateLimiter, authMiddleware, upload.single('image'), (
       });
     }
 
-    // Retornar URL da imagem
-    const imageUrl = `/uploads/${req.file.filename}`;
+    // Sanitizar e validar filename antes de usar
+    const sanitizedFilename = path.basename(req.file.filename);
+    const imageUrl = `/uploads/${sanitizedFilename}`;
     
-    console.log('✅ [UPLOAD] Imagem enviada com sucesso:', req.file.filename);
+    console.log('✅ [UPLOAD] Imagem enviada com sucesso:', sanitizedFilename);
     
     res.json({
       message: 'Imagem enviada com sucesso',
       imageUrl: imageUrl,
-      filename: req.file.filename
+      filename: sanitizedFilename
     });
   } catch (error) {
     console.error('❌ [UPLOAD] Erro ao fazer upload:', error);
@@ -74,6 +75,17 @@ router.post('/image', crudRateLimiter, authMiddleware, upload.single('image'), (
 router.delete('/image/:filename', crudRateLimiter, authMiddleware, (req, res) => {
   try {
     const { filename } = req.params;
+    
+    // Validar filename para prevenir path traversal
+    if (!filename || filename.includes('..') || filename.includes('/') || filename.includes('\\')) {
+      return res.status(400).json({ error: 'Nome de arquivo inválido' });
+    }
+    
+    // Verificar se o arquivo segue o padrão esperado
+    if (!/^image-\d+-\d+\.(jpg|jpeg|png|gif|webp)$/i.test(filename)) {
+      return res.status(400).json({ error: 'Formato de arquivo inválido' });
+    }
+    
     const filepath = path.join(uploadDir, filename);
     
     if (fs.existsSync(filepath)) {
