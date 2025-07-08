@@ -47,17 +47,22 @@ This modern web application serves as the complete digital platform for Igreja S
 ### **Admin Management System**
 
 - **Complete CRUD Operations:** Create, read, update, delete events and news
-- **Authentication System:** Role-based access (Admin/Editor)
+- **JWT Authentication:** Secure token-based authentication system
+- **Role-based Access Control:** Admin/Editor permissions with middleware protection
+- **Password Security:** bcrypt encryption for user passwords
+- **Rate Limiting:** Protection against brute force attacks and spam
 - **Content Management:** Rich text editor with HTML support
 - **Real-time Updates:** Instant synchronization between admin and public pages
-- **Image Management:** URL-based image system with fallbacks
+- **Image Management:** File upload system with drag & drop interface
 - **Publication Control:** Draft/published status with scheduling
 
 ### **Technical Achievements**
 
 - **Full-Stack Integration:** React frontend with Node.js/Express backend
+- **Layered Architecture:** Controllers, Services, Repositories pattern
 - **Database Management:** PostgreSQL with Prisma ORM
-- **RESTful API:** 13+ endpoints with comprehensive error handling
+- **RESTful API:** 15+ endpoints with comprehensive error handling
+- **Security Implementation:** JWT authentication, bcrypt password hashing, and rate limiting
 - **Type Safety:** Complete TypeScript implementation
 - **Testing Coverage:** 39 automated tests with 60%+ coverage
 - **Debug System:** Comprehensive logging for development and troubleshooting  
@@ -118,6 +123,9 @@ This modern web application serves as the complete digital platform for Igreja S
 - **[Express.js](https://expressjs.com/)** - Web application framework
 - **[Prisma 6.11.0](https://prisma.io/)** - Modern database ORM
 - **[PostgreSQL 15+](https://postgresql.org/)** - Robust relational database
+- **[JWT](https://jwt.io/)** - JSON Web Token authentication
+- **[bcrypt](https://github.com/kelektiv/node.bcrypt.js)** - Password hashing
+- **[express-rate-limit](https://github.com/express-rate-limit/express-rate-limit)** - Rate limiting middleware
 
 ### **Payment Processing**
 
@@ -162,9 +170,44 @@ Password: padre123
 
 ## Installation & Setup
 
+### Project Structure
+
+```bash
+santarita/
+├── backend/                    # Node.js + Express + Prisma
+│   ├── src/                   # Source code with layered architecture
+│   │   ├── controllers/       # Request/response handling
+│   │   ├── services/          # Business logic
+│   │   ├── repositories/      # Data access layer
+│   │   ├── middlewares/       # JWT auth, CORS, etc.
+│   │   ├── routes/            # API route definitions
+│   │   ├── app.js             # Express app configuration
+│   │   └── server.js          # Server initialization
+│   ├── uploads/               # User uploaded images (auto-created)
+│   ├── prisma/                # Database schema and migrations
+│   │   └── schema.prisma      # Prisma schema file
+│   ├── .env                   # Backend environment variables
+│   ├── package.json           # Backend dependencies
+│   └── package-lock.json      # Backend lock file
+├── frontend/                   # React + Vite + TypeScript
+│   ├── src/                   # Frontend source code
+│   │   ├── components/        # React components
+│   │   ├── pages/             # Page components
+│   │   ├── services/          # API services + auth service
+│   │   └── contexts/          # React contexts
+│   ├── .env                   # Frontend environment variables
+│   ├── package.json           # Frontend dependencies
+│   ├── package-lock.json      # Frontend lock file
+│   ├── index.html             # Frontend entry point
+│   ├── vite.config.ts         # Vite configuration
+│   └── tailwind.config.js     # Tailwind CSS configuration
+├── DEPLOY.md                  # Deployment guide
+└── README.md                  # This file
+```
+
 ### Prerequisites
 
-- **Node.js** v18+ 
+- **Node.js** v18+
 - **PostgreSQL** 15+
 - **npm** package manager
 - **Git** for version control
@@ -181,12 +224,35 @@ Password: padre123
 2. **Install dependencies:**
 
     ```bash
+    # Install backend dependencies
+    cd backend
+    npm install
+    
+    # Install frontend dependencies  
+    cd ../frontend
     npm install
     ```
 
 3. **Environment Configuration:**
 
-    Create a `.env` file in the root directory:
+    Create `.env` files in both frontend and backend directories:
+
+    **Backend (.env):**
+
+    ```bash
+    # Backend Configuration
+    PORT=3001
+    FRONTEND_URL=http://localhost:3000
+    
+    # Database Configuration
+    DATABASE_URL="postgresql://username:password@localhost:5432/santa_rita_db"
+    
+    # Stripe Configuration (Backend)
+    STRIPE_SECRET_KEY=sk_test_your_secret_key
+    STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
+    ```
+
+    **Frontend (.env):**
 
     ```bash
     # Frontend API Configuration
@@ -194,24 +260,19 @@ Password: padre123
     
     # Stripe Configuration (Frontend)
     VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key
-    
-    # Backend Configuration
-    PORT=3001
-    FRONTEND_URL=http://localhost:3000
-    
-    # Stripe Configuration (Backend)
-    STRIPE_SECRET_KEY=sk_test_your_secret_key
-    STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
-    
-    # Database Configuration
-    DATABASE_URL="postgresql://username:password@localhost:5432/santa_rita_db"
     ```
 
 4. **Database Setup:**
 
     ```bash
-    # Create and migrate database
-    npx prisma migrate dev
+    # Navigate to backend directory
+    cd backend
+    
+    # Generate Prisma client
+    npx prisma generate
+    
+    # Push database schema
+    npx prisma db push
     
     # Seed with initial data
     curl -X POST http://localhost:3001/api/seed
@@ -221,11 +282,15 @@ Password: padre123
 
     ```bash
     # Terminal 1: Start backend server
-    node server-prisma.cjs
+    cd backend
+    npm start
     
     # Terminal 2: Start frontend development server
+    cd frontend
     npm run dev
     ```
+
+    > **Note:** The backend now uses a layered architecture with JWT authentication. Make sure to run the seed command after starting the backend to create initial admin users.
 
 6. **Access the application:**
     - **Public Website:** `http://localhost:3000`
@@ -247,16 +312,18 @@ npm run preview
 ## Admin Panel
 
 ### Features
+
 - **Events Management:** Create, edit, delete church events
 - **News Management:** Manage church announcements and news
 - **User Roles:** Admin and Editor permissions
 - **Real-time Updates:** Changes reflect immediately on public pages
 - **Rich Text Editor:** HTML support for detailed content
-- **Image Integration:** URL-based image system
+- **Image Upload:** Drag & drop file upload with automatic processing
 - **Publication Control:** Draft and published status
 
 ### Navigation
-```
+
+```bash
 /login     - Authentication page
 /admin     - Main admin dashboard
            ├── Events tab (event management)
@@ -264,50 +331,71 @@ npm run preview
 ```
 
 ### Security Features
+
 - Protected routes with authentication
 - Role-based access control
 - Session persistence with localStorage
 - Automatic logout functionality
 - Input validation and sanitization
+- Rate limiting protection against brute force attacks
 
 ---
 
 ## API Documentation
 
 ### Base URL
-```
+
+```bash
 Development: http://localhost:3001/api
 Production: [Your production API URL]
 ```
 
 ### Endpoints
 
-#### Events
+#### Authentication (Public)
+
+```bash
+POST   /api/auth/login       - User login (returns JWT token)
+POST   /api/auth/register    - User registration
+POST   /api/auth/verify      - Verify JWT token (protected)
+POST   /api/auth/refresh     - Refresh JWT token
+POST   /api/auth/logout      - User logout (protected)
 ```
-GET    /api/events           - List active events
-GET    /api/events/:id       - Get specific event
-POST   /api/events           - Create new event
-PUT    /api/events/:id       - Update event
-DELETE /api/events/:id       - Delete event (soft delete)
+
+#### Events
+
+```bash
+GET    /api/events           - List active events (public)
+GET    /api/events/:id       - Get specific event (public)
+POST   /api/events           - Create new event (protected: editor+)
+PUT    /api/events/:id       - Update event (protected: editor+)
+DELETE /api/events/:id       - Delete event (protected: editor+)
 ```
 
 #### News
-```
-GET    /api/news             - List published news (with pagination)
-GET    /api/news/:id         - Get specific news article
-POST   /api/news             - Create new news
-PUT    /api/news/:id         - Update news
-DELETE /api/news/:id         - Delete news
+
+```bash
+GET    /api/news             - List published news (public)
+GET    /api/news/:id         - Get specific news article (public)
+POST   /api/news             - Create new news (protected: editor+)
+PUT    /api/news/:id         - Update news (protected: editor+)
+DELETE /api/news/:id         - Delete news (protected: editor+)
 ```
 
 #### Other
-```
-GET    /api/categories       - List categories
+
+```bash
+GET    /api/categories       - List categories (public)
+POST   /api/categories       - Create category (protected: editor+)
+GET    /api/health          - Health check
 POST   /api/seed            - Populate database with initial data
 POST   /api/create-checkout-session - Stripe payment session
+POST   /api/upload/image           - Upload image file (protected: editor+)
+DELETE /api/upload/image/:filename - Delete uploaded image (protected: editor+)
 ```
 
 ### Response Format
+
 ```json
 {
   "id": "string",
@@ -323,9 +411,68 @@ POST   /api/create-checkout-session - Stripe payment session
 
 ---
 
+## Rate Limiting
+
+The API includes comprehensive rate limiting to protect against abuse and ensure service availability.
+
+### Rate Limit Configuration
+
+| Endpoint Type | Limit | Window | Description |
+|---------------|-------|--------|-------------|
+| **Authentication** | 5 requests | 15 minutes | Login attempts per IP |
+| **Registration** | 3 requests | 1 hour | User registration per IP |
+| **CRUD Operations** | 20 requests | 1 minute | Create/Update/Delete per IP |
+| **Public APIs** | 100 requests | 1 minute | GET requests per IP |
+| **Global Limit** | 200 requests | 1 minute | All requests per IP |
+
+### Rate Limit Headers
+
+When rate limiting is active, the following headers are included in responses:
+
+```bash
+RateLimit-Limit: 5           # Maximum requests allowed
+RateLimit-Remaining: 2       # Requests remaining in window
+RateLimit-Reset: 1625097600  # When the limit resets (Unix timestamp)
+```
+
+### Rate Limit Exceeded Response
+
+When limits are exceeded, the API returns a `429 Too Many Requests` status:
+
+```json
+{
+  "error": "Muitas tentativas",
+  "message": "Limite de 5 tentativas de login excedido. Tente novamente em 15 minutos.",
+  "retryAfter": 900000,
+  "type": "RATE_LIMIT_EXCEEDED"
+}
+```
+
+### Protected Endpoints
+
+#### High Security (Restrictive)
+- `POST /api/auth/login` - 5 requests per 15 minutes
+- `POST /api/auth/register` - 3 requests per hour
+
+#### Medium Security (CRUD Operations)
+- `POST /api/events` - 20 requests per minute
+- `PUT /api/events/:id` - 20 requests per minute
+- `DELETE /api/events/:id` - 20 requests per minute
+- `POST /api/news` - 20 requests per minute
+- `PUT /api/news/:id` - 20 requests per minute
+- `DELETE /api/news/:id` - 20 requests per minute
+
+#### Low Security (Public APIs)
+- `GET /api/events` - 100 requests per minute
+- `GET /api/news` - 100 requests per minute
+- `GET /api/categories` - 100 requests per minute
+
+---
+
 ## Testing
 
 ### Run Tests
+
 ```bash
 # Run all tests
 npm run test
@@ -341,6 +488,7 @@ npm run test:ui
 ```
 
 ### Test Coverage
+
 - **39+ automated tests** implemented
 - **60%+ overall coverage**
 - **96%+ coverage** for critical components (Tithe)
@@ -348,6 +496,7 @@ npm run test:ui
 - Integration tests for API endpoints
 
 ### Testing Stack
+
 - **Vitest** - Fast unit test framework
 - **React Testing Library** - Component testing utilities
 - **jsdom** - DOM environment for testing
