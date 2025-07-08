@@ -28,7 +28,8 @@ const Donate = () => {
       }
 
       // Chamar backend para criar sessão de checkout
-      const response = await fetch('http://localhost:3001/api/create-checkout-session', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const response = await fetch(`${API_BASE_URL}/api/create-checkout-session`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

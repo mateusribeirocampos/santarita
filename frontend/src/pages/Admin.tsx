@@ -7,6 +7,7 @@ import { Event, News } from '../types';
 import EventForm from '../components/EventForm';
 import NewsForm from '../components/NewsForm';
 import ConfirmDialog from '../components/ConfirmDialog';
+import { apiService } from '../services/api';
 
 const Admin = () => {
   const { user, logout } = useAuth();
@@ -61,18 +62,11 @@ const Admin = () => {
 
     setDeleteLoading(true);
     try {
-      const response = await fetch(`http://localhost:3001/api/${itemToDelete.type}s/${itemToDelete.id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error(`Erro ao deletar ${itemToDelete.type === 'event' ? 'evento' : 'notícia'}`);
-      }
-
-      // Refresh the appropriate list
       if (itemToDelete.type === 'event') {
+        await apiService.deleteEvent(itemToDelete.id.toString());
         refetchEvents();
       } else {
+        await apiService.deleteNews(itemToDelete.id.toString());
         refetchNews();
       }
 

@@ -94,30 +94,10 @@ const NewsForm = ({ isOpen, onClose, onSave, news }: NewsFormProps) => {
 
       if (news) {
         // Update existing news
-        const response = await fetch(`http://localhost:3001/api/news/${news.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newsData),
-        });
-
-        if (!response.ok) {
-          throw new Error('Erro ao atualizar notícia');
-        }
+        await apiService.updateNews(news.id.toString(), newsData);
       } else {
         // Create new news
-        const response = await fetch('http://localhost:3001/api/news', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newsData),
-        });
-
-        if (!response.ok) {
-          throw new Error('Erro ao criar notícia');
-        }
+        await apiService.createNews(newsData);
       }
 
       onSave();

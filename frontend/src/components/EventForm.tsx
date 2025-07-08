@@ -123,30 +123,10 @@ const EventForm = ({ isOpen, onClose, onSave, event }: EventFormProps) => {
 
       if (event) {
         // Update existing event
-        const response = await fetch(`http://localhost:3001/api/events/${event.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(eventData),
-        });
-
-        if (!response.ok) {
-          throw new Error('Erro ao atualizar evento');
-        }
+        await apiService.updateEvent(event.id.toString(), eventData);
       } else {
         // Create new event
-        const response = await fetch('http://localhost:3001/api/events', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(eventData),
-        });
-
-        if (!response.ok) {
-          throw new Error('Erro ao criar evento');
-        }
+        await apiService.createEvent(eventData);
       }
 
       onSave();
