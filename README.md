@@ -9,7 +9,7 @@
 **Complete website and admin system for Santa Rita de Cássia Catholic Church**  
 A modern full-stack web application to engage our faith community, manage church content, and facilitate digital donations.
 
-🎉 **Status**: Fully functional with admin panel, authentication, and real-time data integration
+🎉 **Status**: ✅ **PRODUCTION** - Complete system deployed and fully operational
 
 ![Church Banner Image](public/assets/churchIcon4.png?text=Santa+Rita+de+Cássia+Church)
 
@@ -64,8 +64,10 @@ This modern web application serves as the complete digital platform for Igreja S
 - **RESTful API:** 15+ endpoints with comprehensive error handling
 - **Security Implementation:** JWT authentication, bcrypt password hashing, and rate limiting
 - **Type Safety:** Complete TypeScript implementation
-- **Testing Coverage:** 39 automated tests with 60%+ coverage
-- **Debug System:** Comprehensive logging for development and troubleshooting  
+- **Production Deploy:** Vercel (frontend) + Render (backend) + Supabase (database)
+- **CORS Configuration:** Properly configured for production environments
+- **Environment Management:** Separate dev/prod configurations
+- **Image Upload:** Secure file upload system with validation  
 
 ---
 
@@ -142,17 +144,20 @@ This modern web application serves as the complete digital platform for Igreja S
 ### **Deployment**
 
 - **[Vercel](https://vercel.com/)** - Frontend deployment
-- **Development Ports:** Frontend (3000), Backend (3001)
+- **[Render](https://render.com/)** - Backend deployment
+- **[Supabase](https://supabase.com/)** - PostgreSQL database hosting
+- **Development Ports:** Frontend (5173), Backend (3001)
 
 ---
 
 ## Live Demo
 
-🌐 **Production Website:** [https://santaritaourofino.vercel.app](https://santaritaourofino.vercel.app)
+🌐 **Production Website:** [https://igrejasantaritaourofino.vercel.app](https://igrejasantaritaourofino.vercel.app)
+🔧 **Backend API:** [https://santa-rita-backend.onrender.com](https://santa-rita-backend.onrender.com)
 
 ### Demo Credentials
 
-For testing the admin panel in development:
+For testing the admin panel:
 
 ```bash
 Administrator:
@@ -164,7 +169,7 @@ Email: padre@santarita.com
 Password: padre123
 ```
 
-> ⚠️ **Note:** These are demo credentials for development only
+> ⚠️ **Note:** These are demo credentials for testing purposes only
 
 ---
 
@@ -242,10 +247,13 @@ santarita/
     ```bash
     # Backend Configuration
     PORT=3001
-    FRONTEND_URL=http://localhost:3000
+    FRONTEND_URL=http://localhost:5173
     
     # Database Configuration
     DATABASE_URL="postgresql://username:password@localhost:5432/santa_rita_db"
+    
+    # JWT Configuration
+    JWT_SECRET=your_jwt_secret_key_here
     
     # Stripe Configuration (Backend)
     STRIPE_SECRET_KEY=sk_test_your_secret_key
@@ -259,7 +267,10 @@ santarita/
     VITE_API_URL=http://localhost:3001
     
     # Stripe Configuration (Frontend)
-    VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key
+    VITE_STRIPE_PUBLIC_KEY=pk_test_your_publishable_key
+    
+    # Production API URL (for production builds)
+    VITE_PRODUCTION_API_URL=https://santa-rita-backend.onrender.com
     ```
 
 4. **Database Setup:**
@@ -274,8 +285,8 @@ santarita/
     # Push database schema
     npx prisma db push
     
-    # Seed with initial data
-    curl -X POST http://localhost:3001/api/seed
+    # Open Prisma Studio to view/manage data
+    npx prisma studio
     ```
 
 5. **Start the application:**
@@ -293,8 +304,8 @@ santarita/
     > **Note:** The backend now uses a layered architecture with JWT authentication. Make sure to run the seed command after starting the backend to create initial admin users.
 
 6. **Access the application:**
-    - **Public Website:** `http://localhost:3000`
-    - **Admin Panel:** `http://localhost:3000/admin`
+    - **Public Website:** `http://localhost:5173`
+    - **Admin Panel:** `http://localhost:5173/admin`
     - **API Documentation:** `http://localhost:3001/api`
 
 ### Build for Production
@@ -347,7 +358,7 @@ npm run preview
 
 ```bash
 Development: http://localhost:3001/api
-Production: [Your production API URL]
+Production: https://santa-rita-backend.onrender.com/api
 ```
 
 ### Endpoints
@@ -387,11 +398,11 @@ DELETE /api/news/:id         - Delete news (protected: editor+)
 ```bash
 GET    /api/categories       - List categories (public)
 POST   /api/categories       - Create category (protected: editor+)
-GET    /api/health          - Health check
-POST   /api/seed            - Populate database with initial data
+GET    /api/health                 - Health check
 POST   /api/create-checkout-session - Stripe payment session
 POST   /api/upload/image           - Upload image file (protected: editor+)
-DELETE /api/upload/image/:filename - Delete uploaded image (protected: editor+)
+GET    /uploads/:filename          - Serve uploaded images
+POST   /webhook                    - Stripe webhook endpoint
 ```
 
 ### Response Format
@@ -451,10 +462,12 @@ When limits are exceeded, the API returns a `429 Too Many Requests` status:
 ### Protected Endpoints
 
 #### High Security (Restrictive)
+
 - `POST /api/auth/login` - 5 requests per 15 minutes
 - `POST /api/auth/register` - 3 requests per hour
 
 #### Medium Security (CRUD Operations)
+
 - `POST /api/events` - 20 requests per minute
 - `PUT /api/events/:id` - 20 requests per minute
 - `DELETE /api/events/:id` - 20 requests per minute
@@ -463,6 +476,7 @@ When limits are exceeded, the API returns a `429 Too Many Requests` status:
 - `DELETE /api/news/:id` - 20 requests per minute
 
 #### Low Security (Public APIs)
+
 - `GET /api/events` - 100 requests per minute
 - `GET /api/news` - 100 requests per minute
 - `GET /api/categories` - 100 requests per minute

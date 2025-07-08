@@ -30,7 +30,6 @@ const allowedOrigins = [
   process.env.FRONTEND_URL || 'http://localhost:3000',
   'http://localhost:3000',
   'http://localhost:5173',
-  'https://santaritaourofino.vercel.app',
   'https://igrejasantaritaourofino.vercel.app'
 ];
 
@@ -124,72 +123,6 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
   res.json({ received: true });
 });
 
-// Rota de seed (temporária para desenvolvimento)
-app.post('/api/seed', async (req, res) => {
-  try {
-    const { PrismaClient } = require('@prisma/client');
-    const bcrypt = require('bcrypt');
-    const prisma = new PrismaClient();
-
-    // Criar categorias padrão
-    const eventCategory = await prisma.category.upsert({
-      where: { name: 'Litúrgicos' },
-      update: {},
-      create: {
-        name: 'Litúrgicos',
-        description: 'Eventos litúrgicos da igreja',
-        type: 'EVENT'
-      }
-    });
-
-    const newsCategory = await prisma.category.upsert({
-      where: { name: 'Anúncios' },
-      update: {},
-      create: {
-        name: 'Anúncios',
-        description: 'Anúncios gerais da paróquia',
-        type: 'NEWS'
-      }
-    });
-
-    // Criar usuário admin padrão
-    const adminPassword = await bcrypt.hash('admin123', 12);
-    const adminUser = await prisma.user.upsert({
-      where: { email: 'admin@santarita.com' },
-      update: {},
-      create: {
-        name: 'Administrador',
-        email: 'admin@santarita.com',
-        password: adminPassword,
-        role: 'ADMIN'
-      }
-    });
-
-    // Criar usuário editor padrão
-    const editorPassword = await bcrypt.hash('padre123', 12);
-    const editorUser = await prisma.user.upsert({
-      where: { email: 'padre@santarita.com' },
-      update: {},
-      create: {
-        name: 'Padre João',
-        email: 'padre@santarita.com',
-        password: editorPassword,
-        role: 'EDITOR'
-      }
-    });
-
-    res.json({ 
-      message: 'Dados iniciais criados com sucesso',
-      data: { 
-        categories: { eventCategory, newsCategory },
-        users: { adminUser, editorUser }
-      }
-    });
-  } catch (error) {
-    console.error('Erro ao criar dados iniciais:', error);
-    res.status(500).json({ error: 'Erro interno do servidor' });
-  }
-});
 
 // Rota de health check
 app.get('/api/health', (req, res) => {

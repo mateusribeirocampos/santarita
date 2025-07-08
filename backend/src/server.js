@@ -30,7 +30,6 @@ const startServer = async () => {
       console.log('   📰 News: GET/POST/PUT/DELETE /api/news');
       console.log('   🏷️  Categories: GET/POST /api/categories');
       console.log('   💰 Stripe: POST /api/create-checkout-session');
-      console.log('   🌱 Seed: POST /api/seed');
       console.log('   ❤️  Health: GET /api/health');
       console.log('\n✅ Servidor pronto para receber requisições!\n');
     });
