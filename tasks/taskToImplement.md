@@ -24,9 +24,16 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
 - ✅ Auto-deploy configurado
 - ✅ Variáveis de ambiente em produção
 
+### ~~3. Correções UX 2025-07-10~~ ✅
+
+- ✅ Preview de imagem em formulários corrigido
+- ✅ Exibição consistente de fotos em detalhes
+- ✅ Sanitização de URLs atualizada para produção
+- ✅ Componentes ImageUpload e EventDetail corrigidos
+
 ## 🟡 PRÓXIMAS IMPLEMENTAÇÕES
 
-### 3. Melhorias de Performance
+### 4. Melhorias de Performance
 
 - [ ] **Code Splitting e Lazy Loading**
   - Implementar lazy loading para rotas
@@ -44,7 +51,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
   - Otimizar static assets caching
   - Implementar service worker básico
 
-### 4. SEO e Analytics
+### 5. SEO e Analytics
 
 - [ ] **SEO Optimization**
   - Meta tags dinâmicos por página
@@ -58,7 +65,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
   - Error monitoring (Sentry ou similar)
   - Performance monitoring
 
-### 5. Melhorias de UX/UI
+### 6. Melhorias de UX/UI
 
 - [ ] **Accessibility (A11y)**
   - Audit de acessibilidade
@@ -80,7 +87,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
 
 ## 🔄 Funcionalidades Futuras
 
-### 6. Sistema de Newsletter
+### 7. Sistema de Newsletter
 
 - [ ] **Newsletter Completo**
   - Formulário de inscrição funcional
@@ -88,7 +95,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
   - Templates de email
   - Gestão de inscritos
 
-### 7. Sistema de Notícias Automatizado
+### 8. Sistema de Notícias Automatizado
 
 - [ ] **Scraping de Notícias do Vaticano**
   - Web scraping do site oficial do Vaticano (vatican.va)
@@ -107,7 +114,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
   - Verificação de conteúdo apropriado
   - Otimização para SEO automática
 
-### 8. Chatbot com Inteligência Artificial
+### 9. Chatbot com Inteligência Artificial
 
 - [ ] **Chatbot Interativo**
   - Integração com OpenAI GPT ou similar
@@ -137,7 +144,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
   - Métricas de satisfação do usuário
   - Aprendizado contínuo baseado em interações
 
-### 9. Funcionalidades Avançadas
+### 10. Funcionalidades Avançadas
 
 - [ ] **PWA (Progressive Web App)**
   - Service worker completo
@@ -153,7 +160,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
 
 ## 📋 Prioridade Baixa
 
-### 9. Advanced Features (EN)
+### 11. Advanced Features (EN)
 
 - [ ] **PWA (Progressive Web App)**
   - Configurar service worker
@@ -170,7 +177,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
   - Implementar gestão de conteúdo dinâmico
   - Criar admin panel simples
 
-### 10. Developer Experience
+### 12. Developer Experience
 
 - [ ] **Documentation**
   - Melhorar README com setup detalhado
@@ -426,6 +433,6 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
 
 ---
 
-**Última atualização**: 2025-07-08
-**Status**: 📋 Roadmap atualizado com funcionalidades IA incluídas
+**Última atualização**: 2025-07-10
+**Status**: 📋 Roadmap atualizado com correções UX implementadas
 **Próximo Marco**: Performance optimization → Scraping IA → Chatbot IA

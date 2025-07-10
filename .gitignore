@@ -156,3 +156,4 @@ frontend/node_modules
 /src/generated/prisma
 
 /tasks
+/tasks/taskToImplement.md
