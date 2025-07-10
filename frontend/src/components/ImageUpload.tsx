@@ -23,12 +23,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const getSafeImageUrl = (url: string | undefined): string => {
     if (!url) return '';
     
-    // Permitir apenas URLs relativas seguras
+    // Permitir URLs relativas seguras
     if (url.startsWith('/uploads/') || url.startsWith('/assets/')) {
       return url;
     }
     
-    // Bloquear URLs externas e potencialmente maliciosas
+    // Permitir URLs do backend em produção
+    if (url.startsWith('https://santa-rita-backend.onrender.com/uploads/')) {
+      return url;
+    }
+    
+    // Bloquear URLs externas não autorizadas
     return '';
   };
   const [error, setError] = useState<string | null>(null);

@@ -22,12 +22,17 @@ const EventDetail = () => {
         const sanitizeImageUrl = (url: string | undefined): string => {
           if (!url) return '/assets/igreja.png'; // fallback
           
-          // Permitir apenas URLs relativas seguras ou do próprio domínio
+          // Permitir URLs relativas seguras
           if (url.startsWith('/uploads/') || url.startsWith('/assets/')) {
             return url;
           }
           
-          // Se for URL externa, usar fallback
+          // Permitir URLs do backend em produção
+          if (url.startsWith('https://santa-rita-backend.onrender.com/uploads/')) {
+            return url;
+          }
+          
+          // Se for URL externa não autorizada, usar fallback
           return '/assets/igreja.png';
         };
 
