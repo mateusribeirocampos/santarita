@@ -155,22 +155,6 @@ This modern web application serves as the complete digital platform for Igreja S
 🌐 **Production Website:** [https://igrejasantaritaourofino.vercel.app](https://igrejasantaritaourofino.vercel.app)
 🔧 **Backend API:** [https://santa-rita-backend.onrender.com](https://santa-rita-backend.onrender.com)
 
-### Demo Credentials
-
-For testing the admin panel:
-
-```bash
-Administrator:
-Email: admin@santarita.com
-Password: admin123
-
-Editor:
-Email: padre@santarita.com  
-Password: padre123
-```
-
-> ⚠️ **Note:** These are demo credentials for testing purposes only
-
 ---
 
 ## Installation & Setup
