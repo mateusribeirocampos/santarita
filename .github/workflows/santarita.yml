@@ -1,4 +1,7 @@
 name: Supabase Ping
+permissions:
+  contents: read
+  actions: read
 
 on:
   schedule:
@@ -12,7 +15,7 @@ jobs:
       - name: Supabase Health Check
         run: |
           # Teste simples de conectividade (sem acessar tabelas específicas)
-          response=$(curl -s -w "%{http_code}" -H "apikey: ${{ secrets.SUPABASE_SANTARINTA_KEY }}" \
+          response=$(curl -s -w "%{http_code}" -H "apikey: ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
                 "https://dxbpuwucychvfoubpgcj.supabase.co/rest/v1/" \
                 -o /tmp/response.json)
 
@@ -28,7 +31,7 @@ jobs:
       - name: Test Users Table Access
         run: |
           # Tenta acessar a tabela users especificamente
-          response=$(curl -s -w "%{http_code}" -H "apikey: ${{ secrets.SUPABASE_SANTARINTA_KEY }}" \
+          response=$(curl -s -w "%{http_code}" -H "apikey: ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
                 "https://dxbpuwucychvfoubpgcj.supabase.co/rest/v1/users?select=count" \
                 -o /tmp/users_response.json)
 
