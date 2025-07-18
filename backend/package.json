@@ -20,7 +20,7 @@
     "express-rate-limit": "^7.4.1",
     "he": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
-    "multer": "^2.0.1",
+    "multer": "^2.0.2",
     "stripe": "^14.18.0"
   },
   "devDependencies": {
