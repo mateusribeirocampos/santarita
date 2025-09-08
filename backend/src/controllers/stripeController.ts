@@ -10,13 +10,20 @@ export class StripeController {
 
   constructor() {
     if (!process.env.STRIPE_SECRET_KEY) {
-      throw new Error('STRIPE_SECRET_KEY environment variable is required');
+      console.warn('⚠️  STRIPE_SECRET_KEY not configured. Stripe functionality will be disabled.');
+      // Don't throw error, just disable Stripe functionality
+      this.stripe = null as any;
+      return;
     }
     this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   }
 
   async createCheckoutSession(req: Request, res: Response): Promise<void> {
     try {
+      if (!this.stripe) {
+        throw new ValidationError('Stripe is not configured. Please contact the administrator.');
+      }
+
       const { amount, donationType }: StripeCheckoutRequest = req.body;
       
       if (!amount || !donationType) {
@@ -60,6 +67,10 @@ export class StripeController {
 
   async handleWebhook(req: Request, res: Response): Promise<void> {
     try {
+      if (!this.stripe) {
+        throw new ValidationError('Stripe is not configured. Please contact the administrator.');
+      }
+
       const sig = req.headers['stripe-signature'];
       const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
       
