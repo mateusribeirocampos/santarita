@@ -158,3 +158,4 @@ frontend/node_modules
 /tasks
 /tasks/taskToImplement.md
 .CLAUDE
+.mcp.json

@@ -157,6 +157,63 @@ This modern web application serves as the complete digital platform for Igreja S
 
 ---
 
+## Claude Code MCP Agents Setup
+
+Este projeto está configurado com **agentes MCP (Model Context Protocol)** para otimizar o desenvolvimento com Claude Code.
+
+### **🤖 Agentes Configurados**
+
+- **filesystem**: Manipulação de arquivos do projeto
+- **postgresql**: Conexão direta com banco PostgreSQL  
+- **github**: Integração CI/CD, issues e PRs
+- **puppeteer**: Testes E2E automatizados
+- **brave-search**: Busca web para documentação
+- **claude-context**: Busca semântica no código
+- **sentry**: Monitoramento de erros em produção
+- **stripe**: Integração com pagamentos
+
+### **⚡ Setup Rápido dos Agentes**
+
+1. **Configure as variáveis de ambiente:**
+
+   ```bash
+   cp .env.example .env
+   # Preencha as credenciais necessárias no arquivo .env
+   ```
+
+2. **Instale os agentes MCP:**
+
+   ```bash
+   claude mcp install
+   ```
+
+3. **Teste a configuração:**
+
+   ```bash
+   claude mcp status
+   ```
+
+### **🔑 Credenciais Necessárias**
+
+Para usar todos os agentes, você precisa configurar:
+
+- `DATABASE_URL`: String de conexão PostgreSQL
+- `GITHUB_TOKEN`: Token do GitHub (settings → tokens)
+- `SENTRY_DSN` + `SENTRY_AUTH_TOKEN`: Conta Sentry para monitoramento
+- `BRAVE_API_KEY`: API key do Brave Search
+- `STRIPE_SECRET_KEY` + `STRIPE_PUBLISHABLE_KEY`: Chaves Stripe
+
+### **📚 Como Usar**
+
+Com os agentes configurados, você pode:
+
+- Fazer queries diretas no banco: *"Quantos eventos temos cadastrados?"*
+- Analisar código: *"Encontre vulnerabilidades de segurança no projeto"*
+- Automatizar testes: *"Execute testes E2E na página de login"*
+- Monitorar erros: *"Mostre os erros mais frequentes em produção"*
+
+---
+
 ## Installation & Setup
 
 ### Project Structure
