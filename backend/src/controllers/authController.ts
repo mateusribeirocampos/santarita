@@ -9,6 +9,7 @@ export class AuthController {
     try {
       const { email, password }: LoginCredentials = req.body;
 
+      // Input sanitization and validation
       if (!email || !password) {
         res.status(400).json({
           error: 'Email e senha são obrigatórios'
@@ -16,7 +17,18 @@ export class AuthController {
         return;
       }
 
-      const result = await authService.login(email, password);
+      // Sanitize input - trim and limit length for security
+      const sanitizedEmail = typeof email === 'string' ? email.trim().toLowerCase() : '';
+      const sanitizedPassword = typeof password === 'string' ? password : '';
+
+      if (!sanitizedEmail || !sanitizedPassword) {
+        res.status(400).json({
+          error: 'Email e senha são obrigatórios'
+        });
+        return;
+      }
+
+      const result = await authService.login(sanitizedEmail, sanitizedPassword);
 
       successResponse(res, result, 'Login realizado com sucesso');
     } catch (error: any) {
@@ -28,6 +40,12 @@ export class AuthController {
   async register(req: Request, res: Response): Promise<void> {
     try {
       const userData: UserCreateInput = req.body;
+      
+      // Sanitize email input for security
+      if (userData.email && typeof userData.email === 'string') {
+        userData.email = userData.email.trim().toLowerCase();
+      }
+      
       const result = await authService.register(userData);
 
       createdResponse(res, result, 'Usuário registrado com sucesso');

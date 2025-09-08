@@ -2,18 +2,18 @@
   "name": "santa-rita-backend",
   "version": "1.0.0",
   "description": "Backend completo para a Igreja Santa Rita com Prisma e Stripe",
-  "main": "src/server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "dev:ts": "nodemon --exec ts-node src/server.ts",
+    "start": "node dist/server.js",
+    "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/server.ts",
     "build": "tsc && npx prisma generate",
-    "build:prod": "tsc",
+    "build:prod": "tsc && tsc-alias",
     "start:prod": "node dist/server.js",
     "postinstall": "npx prisma generate",
     "db:studio": "npx prisma studio",
     "db:push": "npx prisma db push",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist/"
   },
   "dependencies": {
     "@prisma/client": "^6.11.0",
@@ -38,6 +38,8 @@
     "nodemon": "^3.1.10",
     "prisma": "^6.11.0",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.2"
   }
 }
