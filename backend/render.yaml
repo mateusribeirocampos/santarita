@@ -1,8 +1,8 @@
 services:
   - type: web
     name: santa-rita-backend
-    env: node
-    buildCommand: npm install && npx prisma generate
+    runtime: node
+    buildCommand: npm install && npm run build:render
     startCommand: npm start
     envVars:
       - key: NODE_ENV
