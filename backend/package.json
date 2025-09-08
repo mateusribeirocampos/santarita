@@ -8,6 +8,7 @@
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/server.ts",
     "build": "tsc && npx prisma generate",
     "build:prod": "tsc && tsc-alias",
+    "build:render": "npm run type-check && tsc && tsc-alias && ls -la dist/",
     "start:prod": "node dist/server.js",
     "postinstall": "npx prisma generate",
     "db:studio": "npx prisma studio",
