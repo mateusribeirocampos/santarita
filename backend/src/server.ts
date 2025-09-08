@@ -1,11 +1,11 @@
-const app = require('./app');
-const { PrismaClient } = require('@prisma/client');
+import app from './app';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3001;
 
-// Verificar conexão com banco de dados
-const connectDatabase = async () => {
+// Database connection check
+const connectDatabase = async (): Promise<void> => {
   try {
     await prisma.$connect();
     console.log('✅ Conectado ao banco de dados PostgreSQL');
@@ -15,8 +15,8 @@ const connectDatabase = async () => {
   }
 };
 
-// Iniciar servidor
-const startServer = async () => {
+// Start server
+const startServer = async (): Promise<void> => {
   try {
     await connectDatabase();
     
@@ -29,9 +29,12 @@ const startServer = async () => {
       console.log('   📅 Events: GET/POST/PUT/DELETE /api/events');
       console.log('   📰 News: GET/POST/PUT/DELETE /api/news');
       console.log('   🏷️  Categories: GET/POST /api/categories');
+      console.log('   📤 Upload: POST /api/upload/image');
       console.log('   💰 Stripe: POST /api/create-checkout-session');
+      console.log('   🔗 Webhook: POST /webhook');
       console.log('   ❤️  Health: GET /api/health');
-      console.log('\n✅ Servidor pronto para receber requisições!\n');
+      console.log('\n✨ TypeScript Migration Complete!');
+      console.log('✅ Servidor pronto para receber requisições!\n');
     });
   } catch (error) {
     console.error('❌ Erro ao iniciar servidor:', error);
@@ -40,7 +43,7 @@ const startServer = async () => {
 };
 
 // Graceful shutdown
-const gracefulShutdown = async (signal) => {
+const gracefulShutdown = async (signal: string): Promise<void> => {
   console.log(`\n📡 Recebido sinal ${signal}. Encerrando servidor...`);
   
   try {
@@ -53,19 +56,19 @@ const gracefulShutdown = async (signal) => {
   }
 };
 
-// Handlers para encerramento graceful
+// Signal handlers for graceful shutdown
 process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
-// Handler para erros não capturados
-process.on('unhandledRejection', (reason, promise) => {
+// Error handlers for uncaught exceptions
+process.on('unhandledRejection', (reason: unknown, promise: Promise<unknown>) => {
   console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
-process.on('uncaughtException', (error) => {
+process.on('uncaughtException', (error: Error) => {
   console.error('❌ Uncaught Exception:', error);
   process.exit(1);
 });
 
-// Iniciar aplicação
+// Start the application
 startServer();

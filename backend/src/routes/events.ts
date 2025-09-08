@@ -1,9 +1,9 @@
-const express = require('express');
-const eventController = require('../controllers/eventController');
-const { authMiddleware, editorMiddleware } = require('../middlewares/auth');
-const { publicApiRateLimiter, crudRateLimiter } = require('../middlewares/rateLimiter');
+import { Router } from 'express';
+import eventController from '@/controllers/eventController';
+import { authMiddleware, editorMiddleware } from '@/middlewares/auth';
+import { publicApiRateLimiter, crudRateLimiter } from '@/middlewares/rateLimiter';
 
-const router = express.Router();
+const router = Router();
 
 // Rotas públicas com rate limiting
 router.get('/', publicApiRateLimiter, eventController.getAllEvents);
@@ -14,4 +14,4 @@ router.post('/', crudRateLimiter, authMiddleware, editorMiddleware, eventControl
 router.put('/:id', crudRateLimiter, authMiddleware, editorMiddleware, eventController.updateEvent);
 router.delete('/:id', crudRateLimiter, authMiddleware, editorMiddleware, eventController.deleteEvent);
 
-module.exports = router;
+export default router;

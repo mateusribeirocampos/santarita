@@ -2,7 +2,13 @@ import { ValidationError } from './errors';
 
 export class Validator {
   static isEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Input length limit to prevent DoS attacks
+    if (!email || email.length > 254) {
+      return false;
+    }
+
+    // Safe regex pattern without catastrophic backtracking
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   }
 
@@ -43,8 +49,14 @@ export class Validator {
     if (!email) {
       throw new ValidationError(`${fieldName} is required`);
     }
+
+    // Additional security: trim whitespace and limit length
+    const trimmedEmail = email.trim();
+    if (trimmedEmail.length > 254) {
+      throw new ValidationError(`${fieldName} is too long (maximum 254 characters)`);
+    }
     
-    if (!Validator.isEmail(email)) {
+    if (!Validator.isEmail(trimmedEmail)) {
       throw new ValidationError(`${fieldName} must be a valid email address`);
     }
   }

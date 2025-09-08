@@ -1,9 +1,9 @@
-const express = require('express');
-const authController = require('../controllers/authController');
-const { authMiddleware } = require('../middlewares/auth');
-const { authRateLimiter, registerRateLimiter } = require('../middlewares/rateLimiter');
+import { Router } from 'express';
+import authController from '@/controllers/authController';
+import { authMiddleware } from '@/middlewares/auth';
+import { authRateLimiter, registerRateLimiter } from '@/middlewares/rateLimiter';
 
-const router = express.Router();
+const router = Router();
 
 // Rotas públicas (não precisam de autenticação) mas com rate limiting
 router.post('/login', authRateLimiter, authController.login);
@@ -15,4 +15,4 @@ router.post('/refresh', authController.refreshToken);
 router.post('/change-password', authMiddleware, authController.changePassword);
 router.post('/logout', authMiddleware, authController.logout);
 
-module.exports = router;
+export default router;
