@@ -410,6 +410,7 @@ The Santa Rita backend has been successfully migrated from JavaScript to TypeScr
 ### **Current Architecture**
 
 #### **TypeScript Source Structure**
+
 ```bash
 src/ (TypeScript Only - 25 files)
 ├── controllers/    # 6 TypeScript files - HTTP request handlers
@@ -424,6 +425,7 @@ src/ (TypeScript Only - 25 files)
 ```
 
 #### **Compiled Output Structure**
+
 ```bash
 dist/ (Generated - 100 files)
 ├── *.js            # 25 Compiled JavaScript files

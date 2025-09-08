@@ -155,7 +155,6 @@ frontend/node_modules
 
 /src/generated/prisma
 
-/tasks
-/tasks/taskToImplement.md
+/tasks/
 .CLAUDE
 .mcp.json
