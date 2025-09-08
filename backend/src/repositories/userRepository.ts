@@ -40,7 +40,7 @@ export class UserRepository {
     });
   }
 
-  async update(id: string, userData: Partial<User>): Promise<Omit<User, 'password'>> {
+  async update(id: string, userData: Partial<User & { password: string }>): Promise<Omit<User, 'password'>> {
     return await prisma.user.update({
       where: { id },
       data: userData,
