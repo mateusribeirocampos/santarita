@@ -7,13 +7,15 @@ import {
 } from '@/types';
 import { NotFoundError, ValidationError } from '@/utils/errors';
 import { Validator } from '@/utils/validation';
+import { transformImageUrls, transformImageUrlsArray } from '@/utils/imageUtils';
 
 type EventWithRelations = Awaited<ReturnType<typeof eventRepository.findById>>;
 
 export class EventService {
   async getAllEvents(filters: EventFilters = {}): Promise<NonNullable<EventWithRelations>[]> {
     try {
-      return await eventRepository.findAll(filters);
+      const events = await eventRepository.findAll(filters);
+      return transformImageUrlsArray(events);
     } catch (error: any) {
       console.error('Get all events error:', error);
       throw new Error(`Erro ao buscar eventos: ${error.message}`);
@@ -30,7 +32,7 @@ export class EventService {
         throw new NotFoundError('Evento');
       }
 
-      return event;
+      return transformImageUrls(event);
     } catch (error) {
       if (error instanceof ValidationError || error instanceof NotFoundError) {
         throw error;
@@ -68,7 +70,8 @@ export class EventService {
         authorId
       };
 
-      return await eventRepository.create(newEventData);
+      const createdEvent = await eventRepository.create(newEventData);
+      return transformImageUrls(createdEvent);
     } catch (error) {
       if (error instanceof ValidationError) {
         throw error;
@@ -141,7 +144,8 @@ export class EventService {
       // Add modification author
       updateData.authorId = authorId;
 
-      return await eventRepository.update(id, updateData);
+      const updatedEvent = await eventRepository.update(id, updateData);
+      return transformImageUrls(updatedEvent);
     } catch (error) {
       if (error instanceof ValidationError || error instanceof NotFoundError) {
         throw error;
