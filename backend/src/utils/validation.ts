@@ -21,6 +21,15 @@ export class Validator {
     return uuidRegex.test(id);
   }
 
+  static isValidCUID(id: string): boolean {
+    const cuidRegex = /^c[^\s-]{8,}$/i;
+    return cuidRegex.test(id);
+  }
+
+  static isValidId(id: string): boolean {
+    return this.isValidUUID(id) || this.isValidCUID(id);
+  }
+
   static isValidDate(date: string): boolean {
     const parsedDate = new Date(date);
     return !isNaN(parsedDate.getTime());
@@ -76,8 +85,8 @@ export class Validator {
       throw new ValidationError(`${fieldName} is required`);
     }
 
-    if (!Validator.isValidUUID(id)) {
-      throw new ValidationError(`${fieldName} must be a valid UUID`);
+    if (!Validator.isValidId(id)) {
+      throw new ValidationError(`${fieldName} must be a valid ID (UUID or CUID)`);
     }
   }
 
