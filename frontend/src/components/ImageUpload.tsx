@@ -22,18 +22,30 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   // Sanitizar URL da imagem para prevenir XSS
   const getSafeImageUrl = (url: string | undefined): string => {
     if (!url) return '';
-    
-    // Permitir URLs relativas seguras
+
+    // Permite apenas caminhos relativos estritos controlados pela aplicação
     if (url.startsWith('/uploads/') || url.startsWith('/assets/')) {
       return url;
     }
-    
-    // Permitir URLs do backend em produção
-    if (url.startsWith('https://santa-rita-backend.onrender.com/uploads/')) {
-      return url;
+
+    // Permite apenas URLs HTTPS do backend em produção, e restringe explicitamente o caminho
+    try {
+      const allowedOrigin = 'https://santa-rita-backend.onrender.com';
+      const allowedPathPrefix = '/uploads/';
+      // Se URL é absoluta, verifica origem e caminho
+      const parsedUrl = new URL(url, allowedOrigin); // permite paths relativos também
+      if (
+        parsedUrl.origin === allowedOrigin &&
+        parsedUrl.pathname.startsWith(allowedPathPrefix) &&
+        parsedUrl.protocol === 'https:'
+      ) {
+        return parsedUrl.href;
+      }
+    } catch (e) {
+      // URL constructor throws if url is invalid, fallback to blocking.
     }
-    
-    // Bloquear URLs externas não autorizadas
+
+    // Bloquear URLs externas, protocolos perigosos (javascript:, data:, blob:, etc.)
     return '';
   };
   const [error, setError] = useState<string | null>(null);
