@@ -6,22 +6,35 @@ import { successResponse } from '@/utils/response';
 import { StripeCheckoutRequest, StripeCheckoutResponse } from '@/types';
 
 export class StripeController {
-  private stripe: Stripe;
+  private stripe: Stripe | null;
 
   constructor() {
-    if (!process.env.STRIPE_SECRET_KEY) {
-      console.warn('⚠️  STRIPE_SECRET_KEY not configured. Stripe functionality will be disabled.');
-      // Don't throw error, just disable Stripe functionality
-      this.stripe = null as any;
+    const stripeKey = process.env.STRIPE_SECRET_KEY;
+    
+    // Check if Stripe key is properly configured (not just placeholder values)
+    if (!stripeKey || 
+        stripeKey === 'sk_test_sua_chave_secreta' || 
+        stripeKey === 'sk_test_your_stripe_secret_key' ||
+        stripeKey.startsWith('sk_test_your_') ||
+        stripeKey.length < 20) {
+      console.warn('⚠️  STRIPE_SECRET_KEY not properly configured. Stripe functionality will be disabled.');
+      this.stripe = null;
       return;
     }
-    this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+    
+    try {
+      this.stripe = new Stripe(stripeKey);
+      console.log('✅ Stripe initialized successfully');
+    } catch (error) {
+      console.error('❌ Failed to initialize Stripe:', error);
+      this.stripe = null;
+    }
   }
 
   async createCheckoutSession(req: Request, res: Response): Promise<void> {
     try {
       if (!this.stripe) {
-        throw new ValidationError('Stripe is not configured. Please contact the administrator.');
+        throw new ValidationError('Stripe payment system is not configured. Please contact the administrator to set up payment processing.');
       }
 
       const { amount, donationType }: StripeCheckoutRequest = req.body;
@@ -68,7 +81,7 @@ export class StripeController {
   async handleWebhook(req: Request, res: Response): Promise<void> {
     try {
       if (!this.stripe) {
-        throw new ValidationError('Stripe is not configured. Please contact the administrator.');
+        throw new ValidationError('Stripe payment system is not configured. Please contact the administrator to set up payment processing.');
       }
 
       const sig = req.headers['stripe-signature'];

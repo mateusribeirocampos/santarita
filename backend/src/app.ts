@@ -62,10 +62,10 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/upload', uploadRoutes);
 
 // Stripe routes (maintaining compatibility)
-app.post('/api/create-checkout-session', stripeController.createCheckoutSession);
+app.post('/api/create-checkout-session', stripeController.createCheckoutSession.bind(stripeController));
 
 // Stripe webhook (requires raw body)
-app.post('/webhook', express.raw({ type: 'application/json' }), stripeController.handleWebhook);
+app.post('/webhook', express.raw({ type: 'application/json' }), stripeController.handleWebhook.bind(stripeController));
 
 // Health check route
 app.get('/api/health', (req: Request, res: Response) => {
