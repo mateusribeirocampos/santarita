@@ -40,7 +40,7 @@ const allowedOrigins = [
   process.env.FRONTEND_URL || 'http://localhost:3000',
   'http://localhost:3000',
   'http://localhost:5173',
-  process.env.PRODUCTION_URL || 'https://your-domain.vercel.app'
+  'https://igrejasantaritaourofino.vercel.app'
 ];
 
 app.use(cors({
