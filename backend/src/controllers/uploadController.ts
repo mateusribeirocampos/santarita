@@ -16,18 +16,9 @@ export class UploadController {
       fs.mkdirSync(this.uploadDir, { recursive: true });
     }
 
-    // Configuração do multer
-    const storage = multer.diskStorage({
-      destination: (req, file, cb) => {
-        cb(null, this.uploadDir);
-      },
-      filename: (req, file, cb) => {
-        // Gerar nome único para evitar conflitos
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const ext = path.extname(file.originalname);
-        cb(null, 'image-' + uniqueSuffix + ext);
-      }
-    });
+    // Configuração do multer com memoryStorage para melhor performance
+    // diskStorage é lento no Render.com - usar memoryStorage
+    const storage = multer.memoryStorage();
 
     const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
       // Aceitar apenas imagens
@@ -57,8 +48,16 @@ export class UploadController {
         throw new ValidationError('Nenhum arquivo enviado');
       }
 
-      // Sanitizar e validar filename antes de usar
-      const sanitizedFilename = path.basename(req.file.filename);
+      // Com memoryStorage, gerar filename manualmente
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      const ext = path.extname(req.file.originalname);
+      const filename = 'image-' + uniqueSuffix + ext;
+      
+      // Para memoryStorage, salvar o arquivo no disco manualmente
+      const filepath = path.join(this.uploadDir, filename);
+      await fs.promises.writeFile(filepath, req.file.buffer);
+      
+      const sanitizedFilename = path.basename(filename);
       const imageUrl = `/uploads/${sanitizedFilename}`;
       
       console.log('✅ [UPLOAD] Imagem enviada com sucesso');
