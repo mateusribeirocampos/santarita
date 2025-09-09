@@ -33,7 +33,6 @@ const startServer = async (): Promise<void> => {
       console.log('   💰 Stripe: POST /api/create-checkout-session');
       console.log('   🔗 Webhook: POST /webhook');
       console.log('   ❤️  Health: GET /api/health');
-      console.log('\n✨ TypeScript Migration Complete!');
       console.log('✅ Servidor pronto para receber requisições!\n');
     });
   } catch (error) {
