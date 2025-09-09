@@ -33,7 +33,101 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
 
 ## 🟡 PRÓXIMAS IMPLEMENTAÇÕES
 
-### 4. Melhorias de Performance
+### 4. 🔥 URGENTE - Persistência de Imagens no Banco de Dados
+
+**⚠️ PROBLEMA CRÍTICO:** Render.com não persiste arquivos entre deployments
+
+#### **Análise do Problema Atual:**
+- ❌ Render.com **não persiste arquivos** entre deployments
+- ❌ Imagens salvas em `/uploads/` são **perdidas** a cada redeploy
+- ❌ URLs quebradas: `"https://santa-rita-backend.onrender.comundefined"`
+- ✅ **Correção aplicada:** URLs agora funcionam para novas imagens
+- ⚠️ **Limitação:** Imagens antigas continuam perdidas
+
+#### **Soluções Propostas:**
+
+##### **🥇 OPÇÃO 1: Supabase Storage (Recomendada)**
+**Duração estimada: 3-4 horas**
+
+**Vantagens:**
+- ✅ **Persistência garantida** - CDN integrada + performance otimizada
+- ✅ **Aproveitamento da infraestrutura** - já usamos Supabase para PostgreSQL
+- ✅ **URLs persistentes** - nunca se perdem
+- ✅ **Gestão automática** - redimensionamento, compressão
+- ✅ **Políticas RLS** - segurança integrada
+
+**Implementação:**
+```typescript
+// 1. Configurar bucket no Supabase Dashboard
+// 2. Service de upload
+export class SupabaseImageService {
+  async uploadImage(file: Express.Multer.File, eventId: string) {
+    const { data, error } = await supabase.storage
+      .from('event-images')
+      .upload(`events/${eventId}/${file.filename}`, file.buffer);
+    
+    return supabase.storage.from('event-images').getPublicUrl(data.path);
+  }
+}
+```
+
+##### **🥈 OPÇÃO 2: PostgreSQL BYTEA**
+**Duração estimada: 5-6 horas**
+
+**Vantagens:**
+- ✅ **Controle total** dos dados
+- ✅ **Sem custos adicionais**
+- ✅ **Backup automático** junto com dados
+- ✅ **Transações ACID** - imagem e evento salvos juntos
+
+**Schema Prisma:**
+```prisma
+model Event {
+  // ... campos existentes
+  image           String?   // URL legacy (compatibilidade)
+  imageData       Bytes?    // Dados binários da imagem
+  imageMimeType   String?   // image/jpeg, image/png, etc
+  imageFilename   String?   // nome original do arquivo
+  imageSize       Int?      // tamanho em bytes
+}
+```
+
+#### **📋 Checklist de Implementação:**
+
+**Fase 1: Backend (2-3h)**
+- [ ] Escolher solução (Supabase Storage vs PostgreSQL BYTEA)
+- [ ] Configurar environment variables
+- [ ] Criar service de storage
+- [ ] Atualizar upload controller
+- [ ] Criar endpoints para servir imagens
+
+**Fase 2: Frontend (1-2h)**
+- [ ] Atualizar componente ImageUpload
+- [ ] Modificar URLs de imagem
+- [ ] Implementar preview Base64 (se PostgreSQL)
+- [ ] Testar upload e display
+
+**Fase 3: Migration (1h)**
+- [ ] Testar persistência através de deployments
+- [ ] Migração gradual (manter compatibilidade)
+- [ ] Documentar novo sistema
+
+#### **💰 Comparação de Custos:**
+
+| Critério | PostgreSQL BYTEA | Supabase Storage | AWS S3/Cloudinary |
+|----------|------------------|------------------|-------------------|
+| **Implementação** | 🟡 Complexa | 🟢 Simples | 🔴 Muito complexa |
+| **Performance** | 🟡 Média | 🟢 Ótima | 🟢 Ótima |
+| **Custo** | 🟢 Gratuito | 🟢 Gratuito (até 1GB) | 🟡 Pago |
+| **Manutenção** | 🟡 Alta | 🟢 Baixa | 🟡 Média |
+
+**Status:** 📋 **PLANEJAMENTO COMPLETO**  
+**Prioridade:** 🔥 **ALTA** - Resolve problema crítico de persistência  
+**Impacto:** ⭐⭐⭐⭐⭐ - Essencial para funcionamento adequado do sistema
+
+---
+
+### 5. Melhorias de Performance
 
 - [ ] **Code Splitting e Lazy Loading**
   - Implementar lazy loading para rotas
@@ -51,7 +145,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
   - Otimizar static assets caching
   - Implementar service worker básico
 
-### 5. SEO e Analytics
+### 6. SEO e Analytics
 
 - [ ] **SEO Optimization**
   - Meta tags dinâmicos por página
@@ -65,7 +159,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
   - Error monitoring (Sentry ou similar)
   - Performance monitoring
 
-### 6. Melhorias de UX/UI
+### 7. Melhorias de UX/UI
 
 - [ ] **Accessibility (A11y)**
   - Audit de acessibilidade
@@ -87,7 +181,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
 
 ## 🔄 Funcionalidades Futuras
 
-### 7. Sistema de Newsletter
+### 8. Sistema de Newsletter
 
 - [ ] **Newsletter Completo**
   - Formulário de inscrição funcional
@@ -95,7 +189,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
   - Templates de email
   - Gestão de inscritos
 
-### 8. Sistema de Notícias Automatizado
+### 9. Sistema de Notícias Automatizado
 
 - [ ] **Scraping de Notícias do Vaticano**
   - Web scraping do site oficial do Vaticano (vatican.va)
@@ -114,7 +208,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
   - Verificação de conteúdo apropriado
   - Otimização para SEO automática
 
-### 9. Chatbot com Inteligência Artificial
+### 10. Chatbot com Inteligência Artificial
 
 - [ ] **Chatbot Interativo**
   - Integração com OpenAI GPT ou similar
@@ -144,7 +238,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
   - Métricas de satisfação do usuário
   - Aprendizado contínuo baseado em interações
 
-### 10. Funcionalidades Avançadas
+### 11. Funcionalidades Avançadas
 
 - [ ] **PWA (Progressive Web App)**
   - Service worker completo
@@ -160,7 +254,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
 
 ## 📋 Prioridade Baixa
 
-### 11. Advanced Features (EN)
+### 12. Advanced Features (EN)
 
 - [ ] **PWA (Progressive Web App)**
   - Configurar service worker
@@ -177,7 +271,7 @@ Este documento contém as próximas funcionalidades e melhorias planejadas para 
   - Implementar gestão de conteúdo dinâmico
   - Criar admin panel simples
 
-### 12. Developer Experience
+### 13. Developer Experience
 
 - [ ] **Documentation**
   - Melhorar README com setup detalhado

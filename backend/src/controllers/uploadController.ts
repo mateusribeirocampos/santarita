@@ -20,7 +20,7 @@ export class UploadController {
     // diskStorage é lento no Render.com - usar memoryStorage
     const storage = multer.memoryStorage();
 
-    const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+    const fileFilter = (_req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
       // Aceitar apenas imagens
       if (file.mimetype.startsWith('image/')) {
         cb(null, true);
@@ -111,7 +111,7 @@ export class UploadController {
   }
 
   // Middleware para tratar erros do multer
-  handleMulterError(error: any, req: Request, res: Response, next: NextFunction): void {
+  handleMulterError(error: any, _req: Request, res: Response, next: NextFunction): void {
     if (error instanceof multer.MulterError) {
       if (error.code === 'LIMIT_FILE_SIZE') {
         res.status(400).json({
