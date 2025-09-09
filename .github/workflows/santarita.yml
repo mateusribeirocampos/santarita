@@ -16,7 +16,7 @@ jobs:
         run: |
           # Teste simples de conectividade (sem acessar tabelas específicas)
           response=$(curl -s -w "%{http_code}" -H "apikey: ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
-                "https://dxbpuwucychvfoubpgcj.supabase.co/rest/v1/" \
+                "${{ secrets.SUPABASE_API_URL }}" \
                 -o /tmp/response.json)
 
           echo "Health check response: $response"
@@ -32,7 +32,7 @@ jobs:
         run: |
           # Tenta acessar a tabela users especificamente
           response=$(curl -s -w "%{http_code}" -H "apikey: ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
-                "https://dxbpuwucychvfoubpgcj.supabase.co/rest/v1/users?select=count" \
+                "${{ secrets.SUPABASE_API_URL }}users?select=count" \
                 -o /tmp/users_response.json)
 
           echo "Users table response: $response"

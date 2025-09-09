@@ -14,7 +14,7 @@ services:
           name: santa-rita-db
           property: connectionString
       - key: FRONTEND_URL
-        value: https://santaritaourofino.vercel.app
+        value: https://your-domain.vercel.app
       - key: JWT_SECRET
         generateValue: true
       - key: STRIPE_SECRET_KEY

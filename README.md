@@ -158,8 +158,8 @@ This modern web application serves as the complete digital platform for Igreja S
 
 ## Live Demo
 
-🌐 **Production Website:** [https://igrejasantaritaourofino.vercel.app](https://igrejasantaritaourofino.vercel.app)
-🔧 **Backend API:** [https://santa-rita-backend.onrender.com](https://santa-rita-backend.onrender.com)
+🌐 **Production Website:** [Configure your domain](https://your-domain.vercel.app)
+🔧 **Backend API:** [Configure your backend URL](https://your-backend.onrender.com)
 
 ---
 
