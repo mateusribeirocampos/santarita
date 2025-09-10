@@ -8,6 +8,7 @@ import EventForm from '../components/EventForm';
 import NewsForm from '../components/NewsForm';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { apiService } from '../services/api';
+import { getSafeImageUrlWithFallback } from '../utils/imageUtils';
 
 const Admin = () => {
   const { user, logout } = useAuth();
@@ -176,7 +177,7 @@ const Admin = () => {
                           <div className="flex-shrink-0">
                             <img
                               className="h-10 w-10 rounded-lg object-cover"
-                              src={event.image || '/assets/igreja.png'}
+                              src={getSafeImageUrlWithFallback(event.image)}
                               alt={event.title}
                             />
                           </div>
@@ -256,7 +257,7 @@ const Admin = () => {
                           <div className="flex-shrink-0">
                             <img
                               className="h-10 w-10 rounded-lg object-cover"
-                              src={newsItem.image || '/assets/igreja.png'}
+                              src={getSafeImageUrlWithFallback(newsItem.image)}
                               alt={newsItem.title}
                             />
                           </div>

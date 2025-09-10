@@ -2,6 +2,7 @@ import { Newspaper, Bell, Search, Loader2, AlertCircle, RefreshCw } from 'lucide
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNews } from '../hooks/useNews';
+import { getSafeImageUrlWithFallback } from '../utils/imageUtils';
 
 const News = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
@@ -99,12 +100,12 @@ const News = () => {
           <div className="bg-white rounded-lg shadow-md overflow-hidden mb-12">
             <div className="relative h-96">
               <img
-                src={news[0].image || 'assets/semanaSanta.jpg'}
+                src={getSafeImageUrlWithFallback(news[0].image, '/assets/semanaSanta.jpg')}
                 alt={news[0].title}
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.src = 'assets/semanaSanta.jpg';
+                  target.src = '/assets/semanaSanta.jpg';
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
@@ -132,12 +133,12 @@ const News = () => {
               {news.slice(1).map((item) => (
                 <div key={item.id} className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
                   <img
-                    src={item.image || 'assets/semanaSanta.jpg'}
+                    src={getSafeImageUrlWithFallback(item.image, '/assets/semanaSanta.jpg')}
                     alt={item.title}
                     className="w-full h-48 object-cover"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = 'assets/semanaSanta.jpg';
+                      target.src = '/assets/semanaSanta.jpg';
                     }}
                   />
                   <div className="p-6">

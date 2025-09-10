@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 import { apiService } from '../services/api';
 import { Event } from '../types';
+import { getSafeImageUrlWithFallback } from '../utils/imageUtils';
 
 const EventDetail = () => {
   const { id } = useParams();
@@ -98,7 +99,7 @@ const EventDetail = () => {
       <div className="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
         <div className="h-64 sm:h-96 w-full">
           <img 
-            src={event.image} 
+            src={getSafeImageUrlWithFallback(event.image)} 
             alt={event.title} 
             className="w-full h-full object-cover"
           />

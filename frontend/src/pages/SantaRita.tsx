@@ -1,4 +1,5 @@
 import { Scroll } from "lucide-react";
+import { getSafeImageUrlWithFallback } from '../utils/imageUtils';
 
 export default function SantaRita() {
   const timeline = [
@@ -73,7 +74,7 @@ export default function SantaRita() {
               >
                 <div className="flex-1">
                   <img
-                    src={event.image}
+                    src={getSafeImageUrlWithFallback(event.image)}
                     alt={event.title}
                     className="w-full h-full object-cover rounded-lg shadow-md"
                   />

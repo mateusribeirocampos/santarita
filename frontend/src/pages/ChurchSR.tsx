@@ -1,5 +1,6 @@
 import { Scroll, BookOpen, Church } from "lucide-react";
 import { timelineData, priestsData } from "../data/churchData";
+import { getSafeImageUrlWithFallback } from '../utils/imageUtils';
 
 const ChurchSR = () => {
   return (
@@ -45,7 +46,7 @@ const ChurchSR = () => {
               >
                 <div className="flex-1">
                   <img
-                    src={event.image}
+                    src={getSafeImageUrlWithFallback(event.image)}
                     alt={event.title}
                     className="w-full h-64 object-cover rounded-lg shadow-md"
                   />

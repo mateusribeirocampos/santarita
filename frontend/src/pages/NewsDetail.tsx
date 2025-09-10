@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, User, Tag, Loader2, AlertCircle } from 'lucide-react';
 import DOMPurify from 'dompurify';
 import { apiService, ApiNews } from '../services/api';
+import { getSafeImageUrlWithFallback } from '../utils/imageUtils';
 
 const NewsDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -97,7 +98,7 @@ const NewsDetail = () => {
         {news.image && (
           <div className="relative h-96">
             <img
-              src={news.image}
+              src={getSafeImageUrlWithFallback(news.image)}
               alt={news.title}
               className="w-full h-full object-cover"
               onError={(e) => {

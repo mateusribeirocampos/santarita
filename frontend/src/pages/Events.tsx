@@ -1,6 +1,7 @@
 import { Calendar, Users, Music, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEvents } from '../hooks/useEvents';
+import { getSafeImageUrlWithFallback } from '../utils/imageUtils';
 
 const Events = () => {
   const { events, loading, error, refetch } = useEvents({ active: true });
@@ -69,7 +70,7 @@ const Events = () => {
                   <div className="md:flex-shrink-0">
                     <img
                       className="h-48 w-full object-cover md:w-48"
-                      src={event.image || '/assets/igreja.png'}
+                      src={getSafeImageUrlWithFallback(event.image)}
                       alt={event.title}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
