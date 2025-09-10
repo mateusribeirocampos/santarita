@@ -10,11 +10,11 @@ router.post('/image',
   crudRateLimiter, 
   authMiddleware, 
   uploadController.getUploadMiddleware(), 
-  uploadController.uploadImage
+  uploadController.uploadImage.bind(uploadController)
 );
 
 // Endpoint para deletar imagem
-router.delete('/image/:filename', crudRateLimiter, authMiddleware, uploadController.deleteImage);
+router.delete('/image/:filename', crudRateLimiter, authMiddleware, uploadController.deleteImage.bind(uploadController));
 
 // Middleware para tratar erros do multer
 router.use(uploadController.handleMulterError);

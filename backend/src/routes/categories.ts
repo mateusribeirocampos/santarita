@@ -6,9 +6,9 @@ import { publicApiRateLimiter, crudRateLimiter } from '@/middlewares/rateLimiter
 const router = Router();
 
 // Rota pública para listar categorias com rate limiting
-router.get('/', publicApiRateLimiter, categoryController.getAllCategories);
+router.get('/', publicApiRateLimiter, categoryController.getAllCategories.bind(categoryController));
 
 // Rota protegida para criar categoria com rate limiting
-router.post('/', crudRateLimiter, authMiddleware, editorMiddleware, categoryController.createCategory);
+router.post('/', crudRateLimiter, authMiddleware, editorMiddleware, categoryController.createCategory.bind(categoryController));
 
 export default router;
