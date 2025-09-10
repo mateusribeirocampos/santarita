@@ -2,6 +2,7 @@
  * Testes para as funções utilitárias de sanitização de imagem
  */
 
+import { describe, it, expect } from 'vitest';
 import { getSafeImageUrl, getSafeImageUrlWithFallback, isImageUrlSafe } from '../../utils/imageUtils';
 
 describe('imageUtils', () => {

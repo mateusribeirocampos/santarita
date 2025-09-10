@@ -1,4 +1,6 @@
+/// <reference types="vitest/globals" />
 import '@testing-library/jest-dom';
+import { beforeEach, afterEach, vi } from 'vitest';
 
 // Setup global test environment
 beforeEach(() => {
