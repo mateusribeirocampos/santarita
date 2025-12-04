@@ -158,3 +158,5 @@ frontend/node_modules
 /tasks/
 .CLAUDE
 .mcp.json
+tasks/taskToImplement.md
+backend/prisma/seed.sql

@@ -13,8 +13,12 @@
     "postinstall": "npx prisma generate",
     "db:studio": "npx prisma studio",
     "db:push": "npx prisma db push",
+    "db:seed": "ts-node prisma/seed.ts",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf dist/"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.11.0",
