@@ -13,11 +13,22 @@
     "postinstall": "npx prisma generate",
     "db:studio": "npx prisma studio",
     "db:push": "npx prisma db push",
+    "db:seed": "ts-node prisma/seed.ts",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf dist/"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "^6.11.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.21",
+    "@types/he": "^1.2.3",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.3.1",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -27,19 +38,12 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.1",
     "stripe": "^14.18.0",
-    "tsc-alias": "^1.8.16",
-    "@types/bcrypt": "^5.0.2",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^4.17.21",
-    "@types/he": "^1.2.3",
-    "@types/jsonwebtoken": "^9.0.7",
-    "@types/multer": "^2.0.0",
-    "@types/node": "^24.3.1"
+    "tsc-alias": "^1.8.16"
   },
   "devDependencies": {
     "nodemon": "^3.1.10",
     "prisma": "^6.11.0",
-    "ts-node": "^10.9.2",
+    "ts-node": "^1.7.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.2"
   }
