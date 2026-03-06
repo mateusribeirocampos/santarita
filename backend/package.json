@@ -36,7 +36,7 @@
     "express-rate-limit": "^7.4.1",
     "he": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
-    "multer": "^2.1.0",
+    "multer": "^2.1.1",
     "stripe": "^14.18.0",
     "tsc-alias": "^1.8.16"
   },
