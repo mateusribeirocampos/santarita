@@ -160,3 +160,4 @@ frontend/node_modules
 .mcp.json
 tasks/taskToImplement.md
 backend/prisma/seed.sql
+CLAUDE.md SKILL.md
