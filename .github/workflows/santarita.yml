@@ -14,17 +14,17 @@ jobs:
     steps:
       - name: Supabase Health Check
         run: |
-          # GET /rest/v1/ retorna o schema OpenAPI — não precisa de tabela específica
+          # GET /auth/v1/health — endpoint de health check do GoTrue, aceita anon key
           response=$(curl -s -w "%{http_code}" \
                 -H "apikey: ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
-                -H "Authorization: Bearer ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
-                "${{ secrets.SUPABASE_SANTARITA_URL }}/rest/v1/" \
+                "${{ secrets.SUPABASE_SANTARITA_URL }}/auth/v1/health" \
                 -o /tmp/response.json)
 
           echo "Health check response: $response"
 
           if [[ "$response" =~ ^2[0-9][0-9]$ ]]; then
             echo "Supabase is healthy"
+            cat /tmp/response.json
           else
             echo "Supabase health check failed with status code $response"
             cat /tmp/response.json
