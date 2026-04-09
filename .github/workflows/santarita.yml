@@ -18,7 +18,7 @@ jobs:
           response=$(curl -s -w "%{http_code}" \
                 -H "apikey: ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
                 -H "Authorization: Bearer ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
-                "${{ secrets.SUPABASE_API_URL }}" \
+                "${{ secrets.SUPABASE_SANTARITA_URL }}/rest/v1/" \
                 -o /tmp/response.json)
 
           echo "Health check response: $response"
