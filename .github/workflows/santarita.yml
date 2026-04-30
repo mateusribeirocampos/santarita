@@ -12,21 +12,23 @@ jobs:
   supabase-ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Supabase Health Check
+      - name: Supabase Database Ping
         run: |
-          # GET /auth/v1/health — endpoint de health check do GoTrue, aceita anon key
-          response=$(curl -s -w "%{http_code}" \
+          # GET /rest/v1/ — PostgREST endpoint that actually queries PostgreSQL,
+          # keeping the Supabase database from pausing due to inactivity.
+          # /auth/v1/health only checks GoTrue (auth service), not the database.
+          response=$(curl -s -o /tmp/response.json -w "%{http_code}" \
                 -H "apikey: ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
-                "${{ secrets.SUPABASE_SANTARITA_URL }}/auth/v1/health" \
-                -o /tmp/response.json)
+                -H "Authorization: Bearer ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
+                "${{ secrets.SUPABASE_SANTARITA_URL }}/rest/v1/")
 
-          echo "Health check response: $response"
+          echo "Database ping response: $response"
 
           if [[ "$response" =~ ^2[0-9][0-9]$ ]]; then
-            echo "Supabase is healthy"
+            echo "Supabase database is active"
             cat /tmp/response.json
           else
-            echo "Supabase health check failed with status code $response"
+            echo "Supabase database ping failed with status code $response"
             cat /tmp/response.json
             exit 1
           fi
