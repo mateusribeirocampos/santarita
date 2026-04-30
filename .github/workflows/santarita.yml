@@ -14,13 +14,12 @@ jobs:
     steps:
       - name: Supabase Database Ping
         run: |
-          # GET /rest/v1/ — PostgREST endpoint that actually queries PostgreSQL,
-          # keeping the Supabase database from pausing due to inactivity.
-          # /auth/v1/health only checks GoTrue (auth service), not the database.
+          # SELECT id FROM categories LIMIT 1 via PostgREST — executes a real
+          # PostgreSQL query, keeping the Supabase database from pausing due to inactivity.
           response=$(curl -s -o /tmp/response.json -w "%{http_code}" \
                 -H "apikey: ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
                 -H "Authorization: Bearer ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
-                "${{ secrets.SUPABASE_SANTARITA_URL }}/rest/v1/")
+                "${{ secrets.SUPABASE_SANTARITA_URL }}/rest/v1/categories?select=id&limit=1")
 
           echo "Database ping response: $response"
 
