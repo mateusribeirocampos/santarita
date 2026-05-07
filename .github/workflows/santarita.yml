@@ -1,4 +1,4 @@
-name: Supabase Ping
+name: Keep Services Alive
 permissions:
   contents: read
   actions: read
@@ -12,6 +12,25 @@ jobs:
   supabase-ping:
     runs-on: ubuntu-latest
     steps:
+      - name: Render Backend Ping
+        run: |
+          # Ping the health endpoint to prevent Render free tier from sleeping.
+          # A sleeping Render instance responds to CORS preflight without the
+          # Access-Control-Allow-Origin header, causing frontend fetch failures.
+          response=$(curl -s -o /tmp/render_response.json -w "%{http_code}" \
+                --max-time 60 \
+                "${{ secrets.RENDER_BACKEND_URL }}/api/health")
+
+          echo "Render backend ping response: $response"
+
+          if [[ "$response" =~ ^2[0-9][0-9]$ ]]; then
+            echo "Render backend is active"
+            cat /tmp/render_response.json
+          else
+            echo "Render backend ping returned status $response (may be waking up)"
+            cat /tmp/render_response.json
+          fi
+
       - name: Supabase Database Ping
         run: |
           # GET /rest/v1/ — PostgREST endpoint that actually queries PostgreSQL,

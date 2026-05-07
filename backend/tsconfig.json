@@ -9,8 +9,8 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "Node16",
+    "moduleResolution": "node16",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
@@ -28,16 +28,15 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "exactOptionalPropertyTypes": false,
-    "baseUrl": "./src",
     "paths": {
-      "@/*": ["*"],
-      "@/controllers/*": ["controllers/*"],
-      "@/services/*": ["services/*"],
-      "@/repositories/*": ["repositories/*"],
-      "@/middlewares/*": ["middlewares/*"],
-      "@/routes/*": ["routes/*"],
-      "@/types/*": ["types/*"],
-      "@/utils/*": ["utils/*"]
+      "@/*": ["./src/*"],
+      "@/controllers/*": ["./src/controllers/*"],
+      "@/services/*": ["./src/services/*"],
+      "@/repositories/*": ["./src/repositories/*"],
+      "@/middlewares/*": ["./src/middlewares/*"],
+      "@/routes/*": ["./src/routes/*"],
+      "@/types/*": ["./src/types/*"],
+      "@/utils/*": ["./src/utils/*"]
     }
   },
   "include": [
