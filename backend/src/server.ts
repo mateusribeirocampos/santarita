@@ -4,14 +4,20 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3001;
 
-// Database connection check
-const connectDatabase = async (): Promise<void> => {
-  try {
-    await prisma.$connect();
-    console.log('✅ Conectado ao banco de dados PostgreSQL');
-  } catch (error) {
-    console.error('❌ Erro ao conectar com o banco de dados:', error);
-    process.exit(1);
+const connectDatabase = async (retries = 5, delayMs = 5000): Promise<void> => {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      await prisma.$connect();
+      console.log('✅ Conectado ao banco de dados PostgreSQL');
+      return;
+    } catch (error) {
+      if (attempt === retries) {
+        console.error(`❌ Erro ao conectar com o banco de dados após ${retries} tentativas:`, error);
+        process.exit(1);
+      }
+      console.warn(`⚠️ Tentativa ${attempt}/${retries} falhou. Aguardando ${delayMs / 1000}s...`);
+      await new Promise(resolve => setTimeout(resolve, delayMs));
+    }
   }
 };
 
