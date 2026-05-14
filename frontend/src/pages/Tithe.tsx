@@ -2,12 +2,7 @@ import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 //import {PaymentElement} from '@stripe/react-stripe-js';
 
-// Carrega Stripe com chave pública do ambiente (suporta ambos os formatos de variável)
-const stripePromise = loadStripe(
-  import.meta.env.VITE_STRIPE_PUBLIC_KEY || 
-  import.meta.env.STRIPE_PUBLIC_KEY || 
-  'pk_test_TYooMQauvdEDq54NiTphI7jx'
-);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY ?? '');
 
 const Donate = () => {
   const [amount, setAmount] = useState('');
