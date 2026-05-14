@@ -23,7 +23,10 @@ const Success = () => {
       // Verificar os detalhes da sessão no backend
       const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
       fetch(`${API_BASE_URL}/api/checkout-session?sessionId=${sessionId}`)
-        .then(res => res.json())
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
         .then(data => {
           setSessionInfo(data);
           setLoading(false);
