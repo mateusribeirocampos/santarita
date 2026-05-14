@@ -70,8 +70,9 @@ app.use('/api/news', newsRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/upload', uploadRoutes);
 
-// Stripe routes (maintaining compatibility)
+// Stripe routes
 app.post('/api/create-checkout-session', stripeController.createCheckoutSession.bind(stripeController));
+app.get('/api/checkout-session', stripeController.getCheckoutSession.bind(stripeController));
 
 // Health check route
 app.get('/api/health', (req: Request, res: Response) => {

@@ -78,6 +78,32 @@ export class StripeController {
     }
   }
 
+  async getCheckoutSession(req: Request, res: Response): Promise<void> {
+    try {
+      if (!this.stripe) {
+        throw new ValidationError('Stripe payment system is not configured.');
+      }
+
+      const { sessionId } = req.query;
+
+      if (!sessionId || typeof sessionId !== 'string') {
+        throw new ValidationError('sessionId is required');
+      }
+
+      const session = await this.stripe.checkout.sessions.retrieve(sessionId);
+
+      res.json({
+        id: session.id,
+        payment_status: session.payment_status,
+        amount_total: session.amount_total,
+        currency: session.currency,
+        customer_details: session.customer_details,
+      });
+    } catch (error: any) {
+      handleError(error, res);
+    }
+  }
+
   async handleWebhook(req: Request, res: Response): Promise<void> {
     try {
       if (!this.stripe) {
