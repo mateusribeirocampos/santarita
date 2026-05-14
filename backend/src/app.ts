@@ -29,6 +29,9 @@ if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
 }
 
+// Stripe webhook must be registered BEFORE express.json() to receive the raw body
+app.post('/webhook', express.raw({ type: 'application/json' }), stripeController.handleWebhook.bind(stripeController));
+
 // Global middlewares
 app.use(express.json());
 
@@ -69,9 +72,6 @@ app.use('/api/upload', uploadRoutes);
 
 // Stripe routes (maintaining compatibility)
 app.post('/api/create-checkout-session', stripeController.createCheckoutSession.bind(stripeController));
-
-// Stripe webhook (requires raw body)
-app.post('/webhook', express.raw({ type: 'application/json' }), stripeController.handleWebhook.bind(stripeController));
 
 // Health check route
 app.get('/api/health', (req: Request, res: Response) => {
