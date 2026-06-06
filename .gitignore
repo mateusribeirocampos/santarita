@@ -158,6 +158,7 @@ frontend/node_modules
 /tasks/
 .CLAUDE
 .mcp.json
+.codex/
 tasks/taskToImplement.md
 backend/prisma/seed.sql
 CLAUDE.md SKILL.md

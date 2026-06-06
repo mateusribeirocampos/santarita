@@ -6,6 +6,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ImageUpload from '../../components/ImageUpload';
+import { authService } from '../../services/authService';
 
 // Mock do authService
 vi.mock('../../services/authService', () => ({
@@ -26,6 +27,9 @@ describe('ImageUpload', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(authService.isAuthenticated).mockReturnValue(true);
+    vi.mocked(authService.getAuthHeaders).mockReturnValue({ Authorization: 'Bearer test-token' });
+    vi.mocked(authService.getToken).mockReturnValue('test-token');
   });
 
   it('should render upload area when no image is provided', () => {
