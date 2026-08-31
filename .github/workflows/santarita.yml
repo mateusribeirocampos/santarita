@@ -33,13 +33,14 @@ jobs:
 
       - name: Supabase Database Ping
         run: |
-          # GET /rest/v1/ — PostgREST endpoint that actually queries PostgreSQL,
-          # keeping the Supabase database from pausing due to inactivity.
-          # /auth/v1/health only checks GoTrue (auth service), not the database.
+          # /rest/v1/<tabela>?select=id&limit=1 — o PostgREST traduz em SELECT no
+          # Postgres, que é o que conta como atividade. NÃO usar /rest/v1/ puro: devolve
+          # o schema OpenAPI a partir de cache em memória, podendo responder 200 sem
+          # tocar o banco. Mesma armadilha do /auth/v1/health.
           response=$(curl -s -o /tmp/response.json -w "%{http_code}" \
                 -H "apikey: ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
                 -H "Authorization: Bearer ${{ secrets.SUPABASE_SANTARITA_KEY }}" \
-                "${{ secrets.SUPABASE_SANTARITA_URL }}/rest/v1/")
+                "${{ secrets.SUPABASE_SANTARITA_URL }}/rest/v1/categories?select=id&limit=1")
 
           echo "Database ping response: $response"
 
