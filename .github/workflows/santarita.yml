@@ -5,7 +5,11 @@ permissions:
 
 on:
   schedule:
-    - cron: '27 9 * * 1,3,5'
+    # Diário: o agendador do GitHub é best-effort e pode pular um disparo
+    # inteiro (não só atrasar) — visto em 28/09/2026 com seg/qua/sex, que
+    # deixou o Supabase pausar bem antes do limiar de 7 dias. Rodando todo
+    # dia, um pulo isolado ainda deixa o próximo dia como rede de segurança.
+    - cron: '27 9 * * *'
   workflow_dispatch:
 
 jobs:
