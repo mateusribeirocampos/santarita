@@ -19,7 +19,6 @@ export const authMiddleware = async (
 ): Promise<void> => {
   try {
     const authHeader = req.headers.authorization;
-    console.log('🔍 [Auth] Authorization header:', authHeader);
     
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       console.log('❌ [Auth] Token não fornecido ou formato inválido');
@@ -36,7 +35,11 @@ export const authMiddleware = async (
     }
     
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload;
+      const decoded = jwt.verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] }) as JWTPayload;
+      if (typeof decoded !== 'object' || typeof decoded.userId !== 'string' || !decoded.userId) {
+        res.status(401).json({ error: 'Token inválido ou expirado' });
+        return;
+      }
       
       // Verificar se o usuário ainda existe e está ativo
       const user = await prisma.user.findUnique({

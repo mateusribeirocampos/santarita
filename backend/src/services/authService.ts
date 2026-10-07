@@ -143,7 +143,7 @@ export class AuthService {
 
   async verifyToken(token: string): Promise<Omit<User, 'password'>> {
     try {
-      const decoded = jwt.verify(token, this.JWT_SECRET) as JWTPayload;
+      const decoded = jwt.verify(token, this.JWT_SECRET, { algorithms: ['HS256'] }) as JWTPayload;
       const user = await userRepository.findById(decoded.userId);
       
       if (!user || !user.isActive) {
@@ -165,7 +165,7 @@ export class AuthService {
   async refreshToken(token: string): Promise<LoginResponse> {
     try {
       const decoded = jwt.verify(token, this.JWT_SECRET, { 
-        ignoreExpiration: true 
+        algorithms: ['HS256']
       }) as JWTPayload;
       
       const user = await userRepository.findById(decoded.userId);
