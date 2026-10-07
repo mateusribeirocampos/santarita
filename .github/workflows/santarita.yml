@@ -24,7 +24,7 @@ jobs:
         env:
           SUPABASE_MONITOR_TABLE: categories
           SUPABASE_URL: ${{ secrets.SUPABASE_SANTARITA_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_SANTARITA_KEY }}
+          SUPABASE_API_KEY: ${{ secrets.SUPABASE_SANTARITA_KEY }}
         run: bash .github/scripts/supabase-ping.sh
       - name: Render Backend Ping
         continue-on-error: true
