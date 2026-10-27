@@ -62,24 +62,24 @@ const Donate = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Apoie nossa Igreja</h1>
-        <p className="text-gray-600">
+        <h1 className="font-serif text-4xl font-semibold text-ink mb-4">Apoie nossa Igreja</h1>
+        <p className="text-ink-soft">
         Seus generosos dízimos nos ajudam a manter nossa igreja e apoiar nossos programas comunitários.
         </p>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md p-8">
+      <div className="border border-line p-8">
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Selecione o valor</h2>
+          <h2 className="font-serif text-xl font-semibold mb-4 text-ink">Selecione o valor</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             {predefinedAmounts.map((preset) => (
               <button
                 key={preset}
                 onClick={() => setAmount(preset.toString())}
-                className={`p-4 rounded-md border ${
+                className={`p-4 border ${
                   amount === preset.toString()
-                    ? 'border-blue-700 bg-blue-50 text-blue-700'
-                    : 'border-gray-300 hover:border-blue-700 hover:bg-blue-50'
+                    ? 'border-wine bg-wine-light text-wine'
+                    : 'border-line text-ink hover:border-wine'
                 }`}
               >
                 R$ {preset}
@@ -87,35 +87,35 @@ const Donate = () => {
             ))}
           </div>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">R$</span>
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-ink-soft">R$</span>
             <input
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder=" Entre com o valor que deseja"
-              className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className="w-full pl-8 pr-4 py-2 border border-line focus:ring-1 focus:ring-wine focus:border-wine outline-none"
             />
           </div>
         </div>
 
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Selecione o tipo de dízimo</h2>
+          <h2 className="font-serif text-xl font-semibold mb-4 text-ink">Selecione o tipo de dízimo</h2>
           <div className="grid grid-cols-2 gap-4">
             <button
-              className={`p-4 rounded-md border ${
-                donationType === 'once' 
-                  ? 'border-blue-700 bg-blue-50 text-blue-700' 
-                  : 'border-gray-300 hover:border-blue-700 hover:bg-blue-50'
+              className={`p-4 border ${
+                donationType === 'once'
+                  ? 'border-wine bg-wine-light text-wine'
+                  : 'border-line text-ink hover:border-wine'
               }`}
               onClick={() => setDonationType('once')}
             >
               Uma vez
             </button>
-            <button 
-              className={`p-4 rounded-md border ${
-                donationType === 'monthly' 
-                  ? 'border-blue-700 bg-blue-50 text-blue-700' 
-                  : 'border-gray-300 hover:border-blue-700 hover:bg-blue-50'
+            <button
+              className={`p-4 border ${
+                donationType === 'monthly'
+                  ? 'border-wine bg-wine-light text-wine'
+                  : 'border-line text-ink hover:border-wine'
               }`}
               onClick={() => setDonationType('monthly')}
             >
@@ -127,36 +127,36 @@ const Donate = () => {
         <button
           onClick={handleDonation}
           disabled={!amount || isProcessing}
-          className={`w-full py-3 px-4 rounded-md text-white font-medium ${
+          className={`w-full py-3 px-4 font-medium ${
             !amount || isProcessing
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-700 hover:bg-blue-800'
+              ? 'bg-line text-ink-soft cursor-not-allowed'
+              : 'bg-wine text-parchment hover:bg-wine-dark'
           }`}
         >
-          {isProcessing ? 'Processing...' : `Dízimo R$ ${amount || '0'}`}
+          {isProcessing ? 'Processando...' : `Dízimo R$ ${amount || '0'}`}
         </button>
 
-        <div className="mt-6 text-center text-sm text-gray-500">
+        <div className="mt-6 text-center text-sm text-ink-soft">
           Pagamentos seguros processados por Stripe
         </div>
       </div>
 
-      <div className="mt-12 bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-semibold mb-4">Outras maneiras de fazer o dízimo</h2>
+      <div className="mt-12 border border-line p-8">
+        <h2 className="font-serif text-xl font-semibold mb-4 text-ink">Outras maneiras de fazer o dízimo</h2>
         <div className="space-y-4">
-          <div className="p-4 border border-gray-200 rounded-md">
-            <h3 className="font-medium mb-2">Por Pix</h3>
+          <div className="p-4 border border-line">
+            <h3 className="font-medium mb-2 text-ink">Por Pix</h3>
             <img src="assets/qrcode-pix.png" alt="Pix payment option" />
           </div>
-          <div className="p-4 border border-gray-200 rounded-md">
-            <h3 className="font-medium mb-2">Em pessoa</h3>
-            <p className="text-gray-600">
+          <div className="p-4 border border-line">
+            <h3 className="font-medium mb-2 text-ink">Em pessoa</h3>
+            <p className="text-ink-soft">
             Coloque seu dízimo na cesta de coleta durante a missa ou na secretaria paroquial durante o horário comercial.
             </p>
           </div>
         </div>
       </div>
-      <div className="mt-6 text-center text-sm text-gray-500">
+      <div className="mt-6 text-center text-sm text-ink-soft">
         <p>Para mais informações, entre em contato com a secretaria paroquial.</p>
       </div>
     </div>

@@ -52,17 +52,17 @@ export default function SantaRita() {
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <h1 className="font-serif text-4xl font-semibold text-ink mb-4">
           Santa Rita de Cássia
         </h1>
-        <p className="text-xl text-gray-600"> História de Santa Rita de Cássia</p>
+        <p className="text-xl text-ink-soft">História de Santa Rita de Cássia</p>
       </div>
 
       {/* Timeline */}
       <div className="mb-16">
-        <div className="flex items-center mb-8">
-          <Scroll className="h-6 w-6 text-blue-700 mr-2" />
-          <h2 className="text-3xl font-bold">Santa Rita de Cássia</h2>
+        <div className="flex items-center justify-center mb-10">
+          <Scroll className="h-5 w-5 text-wine mr-2" strokeWidth={1.5} />
+          <h2 className="font-serif text-2xl font-semibold text-ink">Vida e milagres</h2>
         </div>
         <div className="space-y-12">
           {timeline.map((event, index) => (
@@ -76,15 +76,15 @@ export default function SantaRita() {
                   <img
                     src={getSafeImageUrlWithFallback(event.image)}
                     alt={event.title}
-                    className="w-full h-full object-cover rounded-lg shadow-md"
+                    className="w-full h-full object-cover border border-line"
                   />
                 </div>
                 <div className="flex-1 text-center md:text-left">
-                  <div className="text-3xl font-bold text-blue-700 mb-2">
+                  <div className="font-serif text-2xl font-semibold text-wine mb-2">
                     {event.year}
                   </div>
-                  <h3 className="text-2xl font-semibold mb-3">{event.title}</h3>
-                  <p className="text-gray-600">{event.description}</p>
+                  <h3 className="font-serif text-xl font-semibold mb-3 text-ink">{event.title}</h3>
+                  <p className="text-ink-soft">{event.description}</p>
                 </div>
               </div>
             </div>

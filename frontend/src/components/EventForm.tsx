@@ -146,29 +146,29 @@ const EventForm = ({ isOpen, onClose, onSave, event }: EventFormProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-      <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+    <div className="fixed inset-0 bg-ink/60 overflow-y-auto h-full w-full z-50">
+      <div className="relative top-20 mx-auto p-5 border border-line w-11/12 md:w-3/4 lg:w-1/2 bg-parchment">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-medium text-gray-900">
+          <h3 className="font-serif text-lg font-medium text-ink">
             {event ? 'Editar Evento' : 'Novo Evento'}
           </h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600"
+            className="text-ink-soft hover:text-ink"
           >
             <X className="h-6 w-6" />
           </button>
         </div>
 
         {error && (
-          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+          <div className="mb-4 bg-wine-light border border-wine/40 text-wine px-4 py-3">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="title" className="block text-sm font-medium text-ink">
               Título *
             </label>
             <input
@@ -178,12 +178,12 @@ const EventForm = ({ isOpen, onClose, onSave, event }: EventFormProps) => {
               required
               value={formData.title}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
             />
           </div>
 
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="description" className="block text-sm font-medium text-ink">
               Descrição *
             </label>
             <textarea
@@ -193,12 +193,12 @@ const EventForm = ({ isOpen, onClose, onSave, event }: EventFormProps) => {
               rows={3}
               value={formData.description}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
             />
           </div>
 
           <div>
-            <label htmlFor="fullDescription" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="fullDescription" className="block text-sm font-medium text-ink">
               Descrição Completa
             </label>
             <textarea
@@ -207,14 +207,14 @@ const EventForm = ({ isOpen, onClose, onSave, event }: EventFormProps) => {
               rows={4}
               value={formData.fullDescription}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
               placeholder="HTML é aceito (ex: <p>Texto</p>)"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="date" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="date" className="block text-sm font-medium text-ink">
                 Data *
               </label>
               <input
@@ -224,12 +224,12 @@ const EventForm = ({ isOpen, onClose, onSave, event }: EventFormProps) => {
                 required
                 value={formData.date}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
               />
             </div>
 
             <div>
-              <label htmlFor="time" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="time" className="block text-sm font-medium text-ink">
                 Horário *
               </label>
               <input
@@ -239,13 +239,13 @@ const EventForm = ({ isOpen, onClose, onSave, event }: EventFormProps) => {
                 required
                 value={formData.time}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="location" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="location" className="block text-sm font-medium text-ink">
               Local
             </label>
             <input
@@ -254,14 +254,14 @@ const EventForm = ({ isOpen, onClose, onSave, event }: EventFormProps) => {
               id="location"
               value={formData.location}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
               placeholder="Ex: Igreja Principal, Salão Paroquial"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="type" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="type" className="block text-sm font-medium text-ink">
                 Tipo *
               </label>
               <select
@@ -270,7 +270,7 @@ const EventForm = ({ isOpen, onClose, onSave, event }: EventFormProps) => {
                 required
                 value={formData.type}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
               >
                 <option value="">Selecione o tipo</option>
                 <option value="Missa">Missa</option>
@@ -282,7 +282,7 @@ const EventForm = ({ isOpen, onClose, onSave, event }: EventFormProps) => {
             </div>
 
             <div>
-              <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="categoryId" className="block text-sm font-medium text-ink">
                 Categoria *
               </label>
               <select
@@ -291,7 +291,7 @@ const EventForm = ({ isOpen, onClose, onSave, event }: EventFormProps) => {
                 required
                 value={formData.categoryId}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
               >
                 <option value="">Selecione a categoria</option>
                 {categories.map((category) => (
@@ -314,17 +314,17 @@ const EventForm = ({ isOpen, onClose, onSave, event }: EventFormProps) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              className="px-4 py-2 text-sm font-medium text-ink border border-line hover:border-ink focus:outline-none transition-colors"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              className="inline-flex items-center px-4 py-2 text-sm font-medium text-parchment bg-wine hover:bg-wine-dark focus:outline-none disabled:opacity-50 transition-colors"
             >
               {loading ? (
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-parchment mr-2"></div>
               ) : (
                 <Save className="h-4 w-4 mr-2" />
               )}

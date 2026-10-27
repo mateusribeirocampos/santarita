@@ -146,14 +146,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   return (
     <div className={`space-y-4 ${className}`}>
       <div className="flex items-center justify-between">
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-ink">
           Imagem
         </label>
         {currentImage && (
           <button
             type="button"
             onClick={handleRemove}
-            className="text-red-600 hover:text-red-800 text-sm flex items-center gap-1"
+            className="text-wine hover:text-wine-dark text-sm flex items-center gap-1"
           >
             <X size={16} />
             Remover
@@ -166,13 +166,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           <img
             src={getSafeImageUrl(currentImage)}
             alt="Preview"
-            className="w-full h-48 object-cover rounded-lg border border-gray-300"
+            className="w-full h-48 object-cover border border-line"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-200 rounded-lg flex items-center justify-center">
+          <div className="absolute inset-0 bg-ink/60 opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
             <button
               type="button"
               onClick={handleClick}
-              className="bg-white text-gray-800 px-4 py-2 rounded-md hover:bg-gray-100 flex items-center gap-2"
+              className="bg-parchment text-ink px-4 py-2 hover:bg-parchment-dim flex items-center gap-2"
             >
               <Upload size={16} />
               Alterar imagem
@@ -181,10 +181,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         </div>
       ) : (
         <div
-          className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+          className={`border-2 border-dashed p-8 text-center cursor-pointer transition-colors ${
             dragActive
-              ? 'border-blue-500 bg-blue-50'
-              : 'border-gray-300 hover:border-gray-400'
+              ? 'border-wine bg-wine-light'
+              : 'border-line hover:border-wine'
           }`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -193,17 +193,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         >
           {isUploading ? (
             <div className="flex flex-col items-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-2"></div>
-              <p className="text-gray-600">Fazendo upload...</p>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-wine mb-2"></div>
+              <p className="text-ink-soft">Fazendo upload...</p>
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <ImageIcon size={48} className="text-gray-400 mb-4" />
-              <p className="text-gray-600 mb-2">{placeholder}</p>
-              <p className="text-sm text-gray-500">
+              <ImageIcon size={48} className="text-ink-soft mb-4" strokeWidth={1.5} />
+              <p className="text-ink-soft mb-2">{placeholder}</p>
+              <p className="text-sm text-ink-soft">
                 Arraste e solte uma imagem aqui ou clique para selecionar
               </p>
-              <p className="text-xs text-gray-400 mt-2">
+              <p className="text-xs text-ink-soft mt-2">
                 PNG, JPG até 5MB
               </p>
             </div>
@@ -212,7 +212,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       )}
 
       {error && (
-        <div className="text-red-600 text-sm bg-red-50 p-3 rounded-md">
+        <div className="text-wine text-sm bg-wine-light p-3">
           {error}
         </div>
       )}

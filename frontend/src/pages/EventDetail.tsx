@@ -70,8 +70,8 @@ const EventDetail = () => {
     return (
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-700 mr-3" />
-          <span className="text-lg text-gray-600">Carregando evento...</span>
+          <Loader2 className="h-8 w-8 animate-spin text-wine mr-3" />
+          <span className="text-lg text-ink-soft">Carregando evento...</span>
         </div>
       </div>
     );
@@ -80,8 +80,8 @@ const EventDetail = () => {
   if (!event) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Evento não encontrado</h1>
-        <Link to="/eventos" className="text-blue-700 hover:underline inline-flex items-center">
+        <h1 className="font-serif text-2xl font-semibold text-ink mb-4">Evento não encontrado</h1>
+        <Link to="/eventos" className="text-wine hover:underline inline-flex items-center">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Voltar para eventos
         </Link>
@@ -91,47 +91,47 @@ const EventDetail = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-      <Link to="/eventos" className="text-blue-700 hover:underline inline-flex items-center mb-6">
+      <Link to="/eventos" className="text-wine hover:underline inline-flex items-center mb-6">
         <ArrowLeft className="h-4 w-4 mr-2" />
         Voltar para eventos
       </Link>
-      
-      <div className="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
+
+      <div className="border border-line overflow-hidden">
         <div className="h-64 sm:h-96 w-full">
-          <img 
-            src={getSafeImageUrlWithFallback(event.image)} 
-            alt={event.title} 
+          <img
+            src={getSafeImageUrlWithFallback(event.image)}
+            alt={event.title}
             className="w-full h-full object-cover"
           />
         </div>
-        
+
         <div className="p-6 md:p-8">
-          <div className="uppercase tracking-wide text-sm text-blue-700 font-semibold mb-2">
+          <div className="text-sm text-wine font-semibold mb-2">
             {event.type}
           </div>
-          
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+
+          <h1 className="font-serif text-3xl font-semibold text-ink mb-4">
             {event.title}
           </h1>
-          
+
           <div className="flex flex-wrap gap-4 mb-6">
-            <div className="flex items-center text-gray-600">
-              <Calendar className="h-5 w-5 mr-2" />
+            <div className="flex items-center text-ink-soft">
+              <Calendar className="h-5 w-5 mr-2" strokeWidth={1.5} />
               {event.date}
             </div>
-            <div className="flex items-center text-gray-600">
-              <Clock className="h-5 w-5 mr-2" />
+            <div className="flex items-center text-ink-soft">
+              <Clock className="h-5 w-5 mr-2" strokeWidth={1.5} />
               {event.time}
             </div>
             {event.location && (
-              <div className="flex items-center text-gray-600">
-                <MapPin className="h-5 w-5 mr-2" />
+              <div className="flex items-center text-ink-soft">
+                <MapPin className="h-5 w-5 mr-2" strokeWidth={1.5} />
                 {event.location}
               </div>
             )}
           </div>
-          
-          <div className="prose max-w-none text-gray-700">
+
+          <div className="prose max-w-none text-ink-soft">
             <p>{event.description}</p>
             {event.fullDescription && (
               <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.fullDescription) }} />

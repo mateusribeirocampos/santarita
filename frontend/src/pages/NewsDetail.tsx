@@ -42,8 +42,8 @@ const NewsDetail = () => {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-700 mr-3" />
-          <span className="text-lg text-gray-600">Carregando notícia...</span>
+          <Loader2 className="h-8 w-8 animate-spin text-wine mr-3" />
+          <span className="text-lg text-ink-soft">Carregando notícia...</span>
         </div>
       </div>
     );
@@ -54,12 +54,12 @@ const NewsDetail = () => {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="text-center py-12">
-          <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Notícia não encontrada</h1>
-          <p className="text-gray-600 mb-6">{error || 'A notícia que você está procurando não existe ou foi removida.'}</p>
-          <Link 
-            to="/news" 
-            className="inline-flex items-center px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 transition-colors"
+          <AlertCircle className="h-12 w-12 text-wine mx-auto mb-4" strokeWidth={1.5} />
+          <h1 className="font-serif text-2xl font-semibold text-ink mb-2">Notícia não encontrada</h1>
+          <p className="text-ink-soft mb-6">{error || 'A notícia que você está procurando não existe ou foi removida.'}</p>
+          <Link
+            to="/news"
+            className="inline-flex items-center px-4 py-2 border border-ink text-ink hover:bg-ink hover:text-parchment transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Voltar para Notícias
@@ -83,9 +83,9 @@ const NewsDetail = () => {
     <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
       {/* Back button */}
       <div className="mb-6">
-        <Link 
-          to="/news" 
-          className="inline-flex items-center text-blue-700 hover:text-blue-800 font-medium"
+        <Link
+          to="/news"
+          className="inline-flex items-center text-wine hover:underline font-medium"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Voltar para Notícias
@@ -93,7 +93,7 @@ const NewsDetail = () => {
       </div>
 
       {/* Article */}
-      <article className="bg-white rounded-lg shadow-lg overflow-hidden">
+      <article className="border border-line overflow-hidden">
         {/* Hero image */}
         {news.image && (
           <div className="relative h-96">
@@ -106,7 +106,7 @@ const NewsDetail = () => {
                 target.src = '/assets/igreja.png';
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/50 to-transparent" />
           </div>
         )}
 
@@ -115,7 +115,7 @@ const NewsDetail = () => {
           {/* Category badge */}
           {news.category && (
             <div className="mb-4">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border border-wine/40 bg-wine-light text-wine">
                 <Tag className="h-3 w-3 mr-1" />
                 {news.category.name}
               </span>
@@ -123,12 +123,12 @@ const NewsDetail = () => {
           )}
 
           {/* Title */}
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+          <h1 className="font-serif text-3xl font-semibold text-ink mb-4">
             {news.title}
           </h1>
 
           {/* Meta info */}
-          <div className="flex items-center text-sm text-gray-600 mb-6 space-x-4">
+          <div className="flex items-center text-sm text-ink-soft mb-6 space-x-4">
             <div className="flex items-center">
               <Calendar className="h-4 w-4 mr-1" />
               {news.publishedAt ? formatDate(news.publishedAt) : 'Não publicado'}
@@ -141,8 +141,8 @@ const NewsDetail = () => {
 
           {/* Summary */}
           {news.summary && (
-            <div className="bg-gray-50 border-l-4 border-blue-500 p-4 mb-6">
-              <p className="text-lg text-gray-700 font-medium italic">
+            <div className="bg-parchment-dim border-l-2 border-wine p-4 mb-6">
+              <p className="text-lg text-ink font-medium italic">
                 {news.summary}
               </p>
             </div>
@@ -152,29 +152,29 @@ const NewsDetail = () => {
           <div className="prose prose-lg max-w-none">
             {news.content.includes('<') ? (
               // Render HTML content
-              <div 
+              <div
                 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(news.content) }}
-                className="text-gray-700 leading-relaxed"
+                className="text-ink-soft leading-relaxed"
               />
             ) : (
               // Render plain text with line breaks
-              <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+              <div className="text-ink-soft leading-relaxed whitespace-pre-line">
                 {news.content}
               </div>
             )}
           </div>
 
           {/* Publication status */}
-          <div className="mt-8 pt-6 border-t border-gray-200">
+          <div className="mt-8 pt-6 border-t border-line">
             <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-ink-soft">
                 Atualizado em: {formatDate(news.updatedAt)}
               </div>
               <div className="flex items-center space-x-2">
-                <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                  news.isPublished 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-yellow-100 text-yellow-800'
+                <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${
+                  news.isPublished
+                    ? 'border-line text-ink-soft'
+                    : 'border-gold/50 bg-gold-light text-gold'
                 }`}>
                   {news.isPublished ? 'Publicado' : 'Rascunho'}
                 </span>
@@ -186,9 +186,9 @@ const NewsDetail = () => {
 
       {/* Related/Back to news */}
       <div className="mt-8 text-center">
-        <Link 
-          to="/news" 
-          className="inline-flex items-center px-6 py-3 bg-blue-700 text-white rounded-md hover:bg-blue-800 transition-colors font-medium"
+        <Link
+          to="/news"
+          className="inline-flex items-center px-6 py-3 border border-ink text-ink hover:bg-ink hover:text-parchment transition-colors font-medium"
         >
           Ver Todas as Notícias
         </Link>

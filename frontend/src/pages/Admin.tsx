@@ -100,20 +100,20 @@ const Admin = () => {
       <div className="mb-8">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Painel Administrativo</h1>
-            <p className="text-gray-600">Gerencie eventos e notícias da igreja</p>
+            <h1 className="font-serif text-3xl font-semibold text-ink mb-2">Painel Administrativo</h1>
+            <p className="text-ink-soft">Gerencie eventos e notícias da igreja</p>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
+            <div className="flex items-center space-x-2 text-sm text-ink-soft">
               <User className="h-4 w-4" />
               <span>{user?.email}</span>
-              <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">
+              <span className="border border-wine/40 bg-wine-light text-wine px-2 py-1 rounded text-xs font-medium">
                 {user?.role === 'admin' ? 'Administrador' : 'Editor'}
               </span>
             </div>
             <button
               onClick={logout}
-              className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+              className="inline-flex items-center px-3 py-2 border border-line text-sm font-medium text-ink hover:border-wine hover:text-wine transition-colors"
             >
               <LogOut className="h-4 w-4 mr-2" />
               Sair
@@ -123,7 +123,7 @@ const Admin = () => {
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-gray-200 mb-8">
+      <div className="border-b border-line mb-8">
         <nav className="-mb-px flex space-x-8">
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -133,9 +133,9 @@ const Admin = () => {
                 onClick={() => setActiveTab(tab.id as 'events' | 'news')}
                 className={`${
                   activeTab === tab.id
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                } whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm flex items-center`}
+                    ? 'border-wine text-wine'
+                    : 'border-transparent text-ink-soft hover:text-ink hover:border-line'
+                } whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm flex items-center transition-colors`}
               >
                 <Icon className="h-5 w-5 mr-2" />
                 {tab.label}
@@ -150,10 +150,10 @@ const Admin = () => {
         <div>
           {/* Events Header */}
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Eventos</h2>
-            <button 
+            <h2 className="font-serif text-xl font-semibold text-ink">Eventos</h2>
+            <button
               onClick={handleNewEvent}
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+              className="inline-flex items-center px-4 py-2 text-sm font-medium text-parchment bg-wine hover:bg-wine-dark transition-colors"
             >
               <Plus className="h-4 w-4 mr-2" />
               Novo Evento
@@ -163,12 +163,12 @@ const Admin = () => {
           {/* Events List */}
           {eventsLoading ? (
             <div className="text-center py-8">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-              <p className="mt-2 text-gray-600">Carregando eventos...</p>
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-wine"></div>
+              <p className="mt-2 text-ink-soft">Carregando eventos...</p>
             </div>
           ) : (
-            <div className="bg-white shadow overflow-hidden sm:rounded-md">
-              <ul className="divide-y divide-gray-200">
+            <div className="border border-line overflow-hidden">
+              <ul className="divide-y divide-line">
                 {events.length > 0 ? (
                   events.map((event) => (
                     <li key={event.id}>
@@ -176,37 +176,37 @@ const Admin = () => {
                         <div className="flex items-center">
                           <div className="flex-shrink-0">
                             <img
-                              className="h-10 w-10 rounded-lg object-cover"
+                              className="h-10 w-10 object-cover border border-line"
                               src={getSafeImageUrlWithFallback(event.image)}
                               alt={event.title}
                             />
                           </div>
                           <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">{event.title}</div>
-                            <div className="text-sm text-gray-500">
+                            <div className="text-sm font-medium text-ink">{event.title}</div>
+                            <div className="text-sm text-ink-soft">
                               {event.date} às {event.time}
                             </div>
-                            <div className="text-xs text-blue-600">{event.type}</div>
+                            <div className="text-xs text-wine">{event.type}</div>
                           </div>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <button 
+                          <button
                             onClick={() => window.open(`/eventos/${event.id}`, '_blank')}
-                            className="text-gray-400 hover:text-blue-600"
+                            className="text-ink-soft hover:text-wine"
                             title="Visualizar"
                           >
                             <Eye className="h-5 w-5" />
                           </button>
-                          <button 
+                          <button
                             onClick={() => handleEditEvent(event)}
-                            className="text-gray-400 hover:text-yellow-600"
+                            className="text-ink-soft hover:text-gold"
                             title="Editar"
                           >
                             <Edit className="h-5 w-5" />
                           </button>
-                          <button 
+                          <button
                             onClick={() => handleDeleteClick(event.id, 'event', event.title)}
-                            className="text-gray-400 hover:text-red-600"
+                            className="text-ink-soft hover:text-wine"
                             title="Deletar"
                           >
                             <Trash2 className="h-5 w-5" />
@@ -216,7 +216,7 @@ const Admin = () => {
                     </li>
                   ))
                 ) : (
-                  <li className="px-4 py-8 text-center text-gray-500">
+                  <li className="px-4 py-8 text-center text-ink-soft">
                     Nenhum evento encontrado
                   </li>
                 )}
@@ -230,10 +230,10 @@ const Admin = () => {
         <div>
           {/* News Header */}
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Notícias</h2>
-            <button 
+            <h2 className="font-serif text-xl font-semibold text-ink">Notícias</h2>
+            <button
               onClick={handleNewNews}
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+              className="inline-flex items-center px-4 py-2 text-sm font-medium text-parchment bg-wine hover:bg-wine-dark transition-colors"
             >
               <Plus className="h-4 w-4 mr-2" />
               Nova Notícia
@@ -243,12 +243,12 @@ const Admin = () => {
           {/* News List */}
           {newsLoading ? (
             <div className="text-center py-8">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-              <p className="mt-2 text-gray-600">Carregando notícias...</p>
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-wine"></div>
+              <p className="mt-2 text-ink-soft">Carregando notícias...</p>
             </div>
           ) : (
-            <div className="bg-white shadow overflow-hidden sm:rounded-md">
-              <ul className="divide-y divide-gray-200">
+            <div className="border border-line overflow-hidden">
+              <ul className="divide-y divide-line">
                 {news.length > 0 ? (
                   news.map((newsItem) => (
                     <li key={newsItem.id}>
@@ -256,39 +256,39 @@ const Admin = () => {
                         <div className="flex items-center">
                           <div className="flex-shrink-0">
                             <img
-                              className="h-10 w-10 rounded-lg object-cover"
+                              className="h-10 w-10 object-cover border border-line"
                               src={getSafeImageUrlWithFallback(newsItem.image)}
                               alt={newsItem.title}
                             />
                           </div>
                           <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">{newsItem.title}</div>
-                            <div className="text-sm text-gray-500">{newsItem.summary}</div>
-                            <div className="text-xs text-blue-600">
-                              {typeof newsItem.category === 'string' 
-                                ? newsItem.category 
+                            <div className="text-sm font-medium text-ink">{newsItem.title}</div>
+                            <div className="text-sm text-ink-soft">{newsItem.summary}</div>
+                            <div className="text-xs text-wine">
+                              {typeof newsItem.category === 'string'
+                                ? newsItem.category
                                 : newsItem.category?.name}
                             </div>
                           </div>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <button 
+                          <button
                             onClick={() => window.open(`/news/${newsItem.id}`, '_blank')}
-                            className="text-gray-400 hover:text-blue-600"
+                            className="text-ink-soft hover:text-wine"
                             title="Visualizar"
                           >
                             <Eye className="h-5 w-5" />
                           </button>
-                          <button 
+                          <button
                             onClick={() => handleEditNews(newsItem)}
-                            className="text-gray-400 hover:text-yellow-600"
+                            className="text-ink-soft hover:text-gold"
                             title="Editar"
                           >
                             <Edit className="h-5 w-5" />
                           </button>
-                          <button 
+                          <button
                             onClick={() => handleDeleteClick(newsItem.id, 'news', newsItem.title)}
-                            className="text-gray-400 hover:text-red-600"
+                            className="text-ink-soft hover:text-wine"
                             title="Deletar"
                           >
                             <Trash2 className="h-5 w-5" />
@@ -298,7 +298,7 @@ const Admin = () => {
                     </li>
                   ))
                 ) : (
-                  <li className="px-4 py-8 text-center text-gray-500">
+                  <li className="px-4 py-8 text-center text-ink-soft">
                     Nenhuma notícia encontrada
                   </li>
                 )}
@@ -310,48 +310,48 @@ const Admin = () => {
 
       {/* Quick Stats */}
       <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="border border-line overflow-hidden">
           <div className="p-5">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <Calendar className="h-6 w-6 text-gray-400" />
+                <Calendar className="h-6 w-6 text-wine" strokeWidth={1.5} />
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Eventos Ativos</dt>
-                  <dd className="text-lg font-medium text-gray-900">{events.length}</dd>
+                  <dt className="text-sm font-medium text-ink-soft truncate">Eventos Ativos</dt>
+                  <dd className="font-serif text-lg font-medium text-ink">{events.length}</dd>
                 </dl>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="border border-line overflow-hidden">
           <div className="p-5">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <Newspaper className="h-6 w-6 text-gray-400" />
+                <Newspaper className="h-6 w-6 text-wine" strokeWidth={1.5} />
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Notícias Publicadas</dt>
-                  <dd className="text-lg font-medium text-gray-900">{news.length}</dd>
+                  <dt className="text-sm font-medium text-ink-soft truncate">Notícias Publicadas</dt>
+                  <dd className="font-serif text-lg font-medium text-ink">{news.length}</dd>
                 </dl>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="border border-line overflow-hidden">
           <div className="p-5">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <Eye className="h-6 w-6 text-gray-400" />
+                <Eye className="h-6 w-6 text-wine" strokeWidth={1.5} />
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Visualizações Hoje</dt>
-                  <dd className="text-lg font-medium text-gray-900">--</dd>
+                  <dt className="text-sm font-medium text-ink-soft truncate">Visualizações Hoje</dt>
+                  <dd className="font-serif text-lg font-medium text-ink">--</dd>
                 </dl>
               </div>
             </div>

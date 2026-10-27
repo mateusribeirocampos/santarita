@@ -123,29 +123,29 @@ const NewsForm = ({ isOpen, onClose, onSave, news }: NewsFormProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-      <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+    <div className="fixed inset-0 bg-ink/60 overflow-y-auto h-full w-full z-50">
+      <div className="relative top-20 mx-auto p-5 border border-line w-11/12 md:w-3/4 lg:w-1/2 bg-parchment">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-medium text-gray-900">
+          <h3 className="font-serif text-lg font-medium text-ink">
             {news ? 'Editar Notícia' : 'Nova Notícia'}
           </h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600"
+            className="text-ink-soft hover:text-ink"
           >
             <X className="h-6 w-6" />
           </button>
         </div>
 
         {error && (
-          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+          <div className="mb-4 bg-wine-light border border-wine/40 text-wine px-4 py-3">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="title" className="block text-sm font-medium text-ink">
               Título *
             </label>
             <input
@@ -155,12 +155,12 @@ const NewsForm = ({ isOpen, onClose, onSave, news }: NewsFormProps) => {
               required
               value={formData.title}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
             />
           </div>
 
           <div>
-            <label htmlFor="summary" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="summary" className="block text-sm font-medium text-ink">
               Resumo *
             </label>
             <textarea
@@ -170,13 +170,13 @@ const NewsForm = ({ isOpen, onClose, onSave, news }: NewsFormProps) => {
               rows={2}
               value={formData.summary}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
               placeholder="Breve descrição da notícia"
             />
           </div>
 
           <div>
-            <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="content" className="block text-sm font-medium text-ink">
               Conteúdo *
             </label>
             <textarea
@@ -186,14 +186,14 @@ const NewsForm = ({ isOpen, onClose, onSave, news }: NewsFormProps) => {
               rows={6}
               value={formData.content}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
               placeholder="Conteúdo completo da notícia. HTML é aceito."
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="categoryId" className="block text-sm font-medium text-ink">
                 Categoria *
               </label>
               <select
@@ -202,7 +202,7 @@ const NewsForm = ({ isOpen, onClose, onSave, news }: NewsFormProps) => {
                 required
                 value={formData.categoryId}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
               >
                 <option value="">Selecione a categoria</option>
                 {categories.map((category) => (
@@ -214,7 +214,7 @@ const NewsForm = ({ isOpen, onClose, onSave, news }: NewsFormProps) => {
             </div>
 
             <div>
-              <label htmlFor="publishedAt" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="publishedAt" className="block text-sm font-medium text-ink">
                 Data de Publicação
               </label>
               <input
@@ -223,7 +223,7 @@ const NewsForm = ({ isOpen, onClose, onSave, news }: NewsFormProps) => {
                 id="publishedAt"
                 value={formData.publishedAt}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full border border-line px-3 py-2 focus:outline-none focus:ring-1 focus:ring-wine focus:border-wine"
               />
             </div>
           </div>
@@ -242,9 +242,9 @@ const NewsForm = ({ isOpen, onClose, onSave, news }: NewsFormProps) => {
               id="isPublished"
               checked={formData.isPublished}
               onChange={handleChange}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-wine focus:ring-wine border-line rounded"
             />
-            <label htmlFor="isPublished" className="ml-2 block text-sm text-gray-900">
+            <label htmlFor="isPublished" className="ml-2 block text-sm text-ink">
               Publicar imediatamente
             </label>
           </div>
@@ -253,17 +253,17 @@ const NewsForm = ({ isOpen, onClose, onSave, news }: NewsFormProps) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              className="px-4 py-2 text-sm font-medium text-ink border border-line hover:border-ink focus:outline-none transition-colors"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              className="inline-flex items-center px-4 py-2 text-sm font-medium text-parchment bg-wine hover:bg-wine-dark focus:outline-none disabled:opacity-50 transition-colors"
             >
               {loading ? (
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-parchment mr-2"></div>
               ) : (
                 <Save className="h-4 w-4 mr-2" />
               )}

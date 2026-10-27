@@ -17,26 +17,28 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white shadow-lg">
+    <nav className="bg-parchment border-b border-line">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
             <Link to="/" className="flex items-center">
-              <Church className="h-12 w-12 text-blue-700" />
-              <span className="ml-2 text-xl font-semibold text-gray-900">Igreja Santa Rita de Cássia</span>
+              <Church className="h-8 w-8 text-wine" strokeWidth={1.5} />
+              <span className="ml-3 font-serif text-lg font-semibold text-ink">
+                Igreja Santa Rita de Cássia
+              </span>
             </Link>
           </div>
 
           {/* Desktop menu */}
-          <div className="hidden md:flex md:items-center md:space-x-4">
+          <div className="hidden md:flex md:items-center md:space-x-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium ${
+                className={`px-3 py-2 text-sm font-medium border-b-2 transition-colors ${
                   location.pathname === item.path
-                    ? 'bg-blue-700 text-white'
-                    : 'text-gray-700 hover:bg-blue-50'
+                    ? 'border-wine text-wine'
+                    : 'border-transparent text-ink-soft hover:text-ink hover:border-line'
                 }`}
               >
                 {item.name}
@@ -48,7 +50,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 border border-line text-ink hover:border-wine focus:outline-none"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -58,16 +60,16 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden">
+        <div className="md:hidden border-t border-line">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                className={`block px-3 py-2 text-base font-medium border-l-2 ${
                   location.pathname === item.path
-                    ? 'bg-blue-700 text-white'
-                    : 'text-gray-700 hover:bg-blue-50'
+                    ? 'border-wine text-wine bg-wine-light'
+                    : 'border-transparent text-ink-soft hover:border-line'
                 }`}
                 onClick={() => setIsOpen(false)}
               >

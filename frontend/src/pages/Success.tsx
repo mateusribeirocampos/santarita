@@ -44,9 +44,9 @@ const Success = () => {
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12 text-center">
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-2xl font-bold mb-4">Verificando pagamento...</h1>
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700 mx-auto"></div>
+        <div className="border border-line p-8">
+          <h1 className="font-serif text-2xl font-semibold text-ink mb-4">Verificando pagamento...</h1>
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-wine mx-auto"></div>
         </div>
       </div>
     );
@@ -55,20 +55,20 @@ const Success = () => {
   if (!sessionInfo) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12 text-center">
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Erro ao verificar pagamento</h1>
-          <p className="text-gray-600 mb-6">
+        <div className="border border-line p-8">
+          <h1 className="font-serif text-2xl font-semibold text-wine mb-4">Erro ao verificar pagamento</h1>
+          <p className="text-ink-soft mb-6">
             Não foi possível verificar o status do seu pagamento. Entre em contato conosco se precisar de ajuda.
           </p>
-          <Link 
-            to="/tithe" 
-            className="inline-block py-3 px-6 bg-blue-700 text-white rounded-md hover:bg-blue-800 mr-4"
+          <Link
+            to="/tithe"
+            className="inline-block py-3 px-6 border border-wine text-wine hover:bg-wine hover:text-parchment mr-4 transition-colors"
           >
             Tentar Novamente
           </Link>
-          <Link 
-            to="/" 
-            className="inline-block py-3 px-6 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+          <Link
+            to="/"
+            className="inline-block py-3 px-6 border border-ink text-ink hover:bg-ink hover:text-parchment transition-colors"
           >
             Página Inicial
           </Link>
@@ -88,15 +88,15 @@ const Success = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12 text-center">
-      <div className="bg-white rounded-lg shadow-md p-8">
-        <h1 className="text-3xl font-bold text-green-600 mb-4">Pagamento Realizado com Sucesso!</h1>
-        <p className="text-gray-600 mb-6">
+      <div className="border border-line p-8">
+        <h1 className="font-serif text-3xl font-semibold text-wine mb-4">Pagamento realizado com sucesso</h1>
+        <p className="text-ink-soft mb-6">
           Obrigado por seu dízimo. Sua contribuição é muito importante para nossa comunidade.
         </p>
-        
-        <div className="bg-gray-50 rounded-lg p-6 mb-6">
-          <h2 className="text-lg font-semibold mb-4">Detalhes da Doação</h2>
-          <div className="space-y-2 text-left max-w-md mx-auto">
+
+        <div className="bg-parchment-dim border border-line p-6 mb-6">
+          <h2 className="font-serif text-lg font-semibold mb-4 text-ink">Detalhes da doação</h2>
+          <div className="space-y-2 text-left max-w-md mx-auto text-ink">
             <div className="flex justify-between">
               <span>ID da transação:</span>
               <span className="font-mono text-sm">{sessionInfo.id.substring(0, 20)}...</span>
@@ -104,7 +104,7 @@ const Success = () => {
             {sessionInfo.amount_total && (
               <div className="flex justify-between">
                 <span>Valor:</span>
-                <span className="font-semibold text-green-600">
+                <span className="font-semibold text-wine">
                   {formatAmount(sessionInfo.amount_total, sessionInfo.currency)}
                 </span>
               </div>
@@ -126,13 +126,13 @@ const Success = () => {
           </div>
         </div>
 
-        <p className="text-sm text-gray-500 mb-6">
+        <p className="text-sm text-ink-soft mb-6">
           Um email de confirmação será enviado para você em breve.
         </p>
-        
-        <Link 
-          to="/" 
-          className="inline-block py-3 px-6 bg-blue-700 text-white rounded-md hover:bg-blue-800"
+
+        <Link
+          to="/"
+          className="inline-block py-3 px-6 border border-ink text-ink hover:bg-ink hover:text-parchment transition-colors"
         >
           Voltar para a Página Inicial
         </Link>
